@@ -1,1 +1,1 @@
-web: reflex run
+web: bash start.sh
