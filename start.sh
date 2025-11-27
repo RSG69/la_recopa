@@ -1,12 +1,13 @@
 #!/bin/bash
 
-# Instalar dependencias necesarias para Reflex
+# Instalar dependencias necesarias
 apt-get update && apt-get install -y unzip curl
 
-# Railway asigna un puerto dinámico, lo usamos aquí:
+# Railway asigna un puerto dinámico. Si no está, usamos 3000.
 export PORT=${PORT:-3000}
 
-# Arrancamos Reflex escuchando en todas las interfaces (importante para WS)
-reflex run --env prod --backend-host 0.0.0.0 --port $PORT
+# Iniciar Reflex usando un solo puerto (frontend + backend + websocket)
+reflex run --env prod --backend-host 0.0.0.0 --single-port $PORT
+
 
 
