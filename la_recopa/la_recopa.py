@@ -55,7 +55,47 @@ class State(rx.State):
     def plato_img(self) -> str: return self.PLATOS[self.index_plato][1]
 
 
-def header() -> rx.Component:
+def crear_celda(titulo: str, texto: rx.Var, imagen: rx.Var, direccion: str, gradiente: str) -> rx.Component:
+    """Celda con doble imagen para animación suave."""
+    return rx.box(
+        rx.vstack(
+            rx.heading(
+                titulo,
+                font_family="Playfair Display, serif",
+                font_size="3xl",
+                font_weight="bold",
+                color="white",
+                text_align="center",
+                text_shadow="1px 1px 4px rgba(0,0,0,0.5)",
+            ),
+            rx.box(
+                rx.box(
+                    # IMAGEN DOBLE: current + next
+                    rx.image(
+                        src=imagen,
+                        class_name="img-current",
+                        data_direction=direccion,
+                    ),
+                    rx.image(
+                        src=imagen,
+                        class_name="img-next",
+                        data_direction=direccion,
+                    ),
+                    class_name="carousel-dual",
+                ),
+                rx.text(texto, class_name="carousel-item-text"),
+                class_name="carousel-item",
+            ),
+        ),
+        border="3px solid rgba(255,255,255,0.4)",
+        border_radius="18px",
+        padding="12px",
+        background=gradiente,
+        box_shadow="0 6px 16px rgba(0,0,0,0.25)",
+    )
+
+
+def header():
     return rx.box(
         rx.hstack(
             rx.heading("🌅 Mi Galería", font_size="2xl", color="orange.600"),
@@ -76,48 +116,7 @@ def header() -> rx.Component:
     )
 
 
-def crear_celda(titulo: str, texto: rx.Var, imagen: rx.Var, direccion: str, gradiente: str) -> rx.Component:
-    """Crea una celda del grid con un fondo degradado único"""
-    return rx.box(
-        rx.vstack(
-            rx.heading(
-                titulo,
-                font_family="Playfair Display, serif",
-                font_size="3xl",
-                font_weight="bold",
-                color="white",
-                text_align="center",
-                text_shadow="1px 1px 4px rgba(0,0,0,0.5)",
-            ),
-            rx.box(
-                rx.box(
-                    rx.image(
-                        src=imagen,
-                        width="100%",
-                        height="100%",
-                        border_radius="lg",
-                        shadow="lg",
-                        class_name="carousel-item-img",
-                        data_direction=direccion,
-                    ),
-                    class_name="carousel-image-wrapper",
-                ),
-                rx.text(
-                    texto,
-                    class_name="carousel-item-text",
-                ),
-                class_name="carousel-item",
-            ),
-        ),
-        border="3px solid rgba(255,255,255,0.4)",
-        border_radius="18px",
-        padding="12px",
-        background=gradiente,
-        box_shadow="0 6px 16px rgba(0,0,0,0.25)",
-    )
-
-
-def footer() -> rx.Component:
+def footer():
     return rx.box(
         rx.text(
             "© 2025 Mi Galería Reflex — Todos los derechos reservados",
@@ -138,38 +137,18 @@ def footer() -> rx.Component:
     )
 
 
-def cuerpo() -> rx.Component:
+def cuerpo():
     return rx.box(
         rx.box(
             rx.grid(
-                crear_celda(
-                    "DESAYUNOS",
-                    State.desayuno_text,
-                    State.desayuno_img,
-                    "up",
-                    "linear-gradient(135deg, #e6c193, #ED8F03)"
-                ),
-                crear_celda(
-                    "ALMUERZOS",
-                    State.almuerzo_text,
-                    State.almuerzo_img,
-                    "down",
-                    "linear-gradient(135deg, #43C6AC, #191654)"
-                ),
-                crear_celda(
-                    "TAPAS",
-                    State.tapa_text,
-                    State.tapa_img,
-                    "left",
-                    "linear-gradient(135deg, #F7971E, #FFD200)"
-                ),
-                crear_celda(
-                    "PLATOS COMBINADOS",
-                    State.plato_text,
-                    State.plato_img,
-                    "right",
-                    "linear-gradient(135deg, #8360c3, #2ebf91)"
-                ),
+                crear_celda("DESAYUNOS", State.desayuno_text, State.desayuno_img, "up",
+                            "linear-gradient(135deg, #e6c193, #ED8F03)"),
+                crear_celda("ALMUERZOS", State.almuerzo_text, State.almuerzo_img, "down",
+                            "linear-gradient(135deg, #43C6AC, #191654)"),
+                crear_celda("TAPAS", State.tapa_text, State.tapa_img, "left",
+                            "linear-gradient(135deg, #F7971E, #FFD200)"),
+                crear_celda("PLATOS", State.plato_text, State.plato_img, "right",
+                            "linear-gradient(135deg, #8360c3, #2ebf91)"),
                 columns=rx.breakpoints(sm="1", md="2", lg="3"),
                 spacing="6",
                 justify="center",
@@ -180,7 +159,6 @@ def cuerpo() -> rx.Component:
             padding_top="100px",
             padding_bottom="100px",
             width="100%",
-            #height="calc(100vh - 130px)",
             overflow="visible",
             display="flex",
             justify_content="center",
@@ -189,88 +167,94 @@ def cuerpo() -> rx.Component:
             class_name="grid-background",
         ),
 
-        # Botones ocultos que controlan el cambio de imagen
+        # BOTONES OCULTOS
         rx.button("next", id="next-desayuno", on_click=State.next_desayuno, style={"display": "none"}),
         rx.button("next", id="next-almuerzo", on_click=State.next_almuerzo, style={"display": "none"}),
         rx.button("next", id="next-tapa", on_click=State.next_tapa, style={"display": "none"}),
         rx.button("next", id="next-plato", on_click=State.next_plato, style={"display": "none"}),
 
-        # Script modificado: la animación se aplica a las imágenes directamente
+        # SCRIPT con animación suave + doble imagen
         rx.script(r"""
 (function(){
   const IN_DURATION  = 2000;
-  const VISIBLE_MS   = 3000;
   const OUT_DURATION = 1800;
-  const START_DELAY  = 300;
+  const VISIBLE_MS   = 3000;
 
   const anims = {
     up: {
-      in:  [{ transform: "translateY(60%)", opacity: 0 },
+      in:  [{ transform: "translateY(40%)", opacity: 0 },
             { transform: "translateY(0)", opacity: 1 }],
       out: [{ transform: "translateY(0)", opacity: 1 },
-            { transform: "translateY(-60%)", opacity: 0 }]
+            { transform: "translateY(-40%)", opacity: 0 }]
     },
     down: {
-      in:  [{ transform: "translateY(-60%)", opacity: 0 },
+      in:  [{ transform: "translateY(-40%)", opacity: 0 },
             { transform: "translateY(0)", opacity: 1 }],
       out: [{ transform: "translateY(0)", opacity: 1 },
-            { transform: "translateY(60%)", opacity: 0 }]
+            { transform: "translateY(40%)", opacity: 0 }]
     },
     left: {
-      in:  [{ transform: "translateX(60%)", opacity: 0 },
+      in:  [{ transform: "translateX(40%)", opacity: 0 },
             { transform: "translateX(0)", opacity: 1 }],
       out: [{ transform: "translateX(0)", opacity: 1 },
-            { transform: "translateX(-60%)", opacity: 0 }]
+            { transform: "translateX(-40%)", opacity: 0 }]
     },
     right: {
-      in:  [{ transform: "translateX(-60%)", opacity: 0 },
+      in:  [{ transform: "translateX(-40%)", opacity: 0 },
             { transform: "translateX(0)", opacity: 1 }],
       out: [{ transform: "translateX(0)", opacity: 1 },
-            { transform: "translateX(60%)", opacity: 0 }]
+            { transform: "translateX(40%)", opacity: 0 }]
     },
     fade: {
-      in:  [{ opacity: 0, transform: "scale(1.04)" },
-            { opacity: 1, transform: "scale(1)" }],
-      out: [{ opacity: 1, transform: "scale(1)" },
-            { opacity: 0, transform: "scale(1.04)" }]
+      in:  [{ opacity: 0 }, { opacity: 1 }],
+      out: [{ opacity: 1 }, { opacity: 0 }]
     }
   };
 
-  const buttons = ["next-desayuno", "next-almuerzo", "next-tapa", "next-plato"];
-  const wait = (ms) => new Promise(res => setTimeout(res, ms));
+  const buttons = ["next-desayuno","next-almuerzo","next-tapa","next-plato"];
+  const wait = ms => new Promise(res => setTimeout(res, ms));
 
-  async function runCellLoop(img, idx) {
-    const dir = img.dataset.direction || "fade";
-    const anim = anims[dir] || anims.fade;
-    const buttonId = buttons[idx];
+  async function runDual(current, next, idx) {
+    const dir = current.dataset.direction || "fade";
+    const anim = anims[dir];
+    const btnId = buttons[idx];
 
     while (true) {
-      img.style.opacity = 0;
-      await img.animate(anim.in, { duration: IN_DURATION, easing: "ease-out", fill: "forwards" }).finished;
-      await wait(VISIBLE_MS);
-      await img.animate(anim.out, { duration: OUT_DURATION, easing: "ease-in", fill: "forwards" }).finished;
+      const nextSrc = next.src;
 
-      const btn = document.getElementById(buttonId);
-      if (btn) btn.click();
-      await wait(50);
+      await next.animate(anim.in, { duration: IN_DURATION, fill: "forwards" }).finished;
+      await wait(VISIBLE_MS);
+      await current.animate(anim.out, { duration: OUT_DURATION, fill: "forwards" }).finished;
+
+      document.getElementById(btnId)?.click();
+
+      await wait(40);
+
+      current.src = nextSrc;
+      current.style.opacity = 1;
+      current.style.transform = "none";
+
+      next.style.opacity = 0;
+      next.style.transform = "none";
     }
   }
 
   setTimeout(() => {
-    document.querySelectorAll(".carousel-item-img")
-      .forEach((img, idx) => runCellLoop(img, idx));
-  }, START_DELAY);
+    const pairs = [...document.querySelectorAll(".carousel-dual")]
+      .map(box => [
+        box.querySelector(".img-current"),
+        box.querySelector(".img-next")
+      ]);
+
+    pairs.forEach((pair, idx) => runDual(pair[0], pair[1], idx));
+  }, 400);
+
 })();
-"""),
-        position="relative",
-        width="100%",
-        display="flex",
-        justify_content="center",
-        z_index="1",
+        """)
     )
 
 
-def galeria() -> rx.Component:
+def galeria():
     return rx.box(
         header(),
         cuerpo(),
@@ -282,10 +266,11 @@ def galeria() -> rx.Component:
 
 
 app = rx.App(stylesheets=["/carousel.css"], theme=custom_theme)
-app.add_page(galeria, title="Galería con gradientes y animaciones", route="/")
+app.add_page(galeria, title="Galería con animaciones suaves", route="/")
 
 if __name__ == "__main__":
     app.run()
+
 
 
 
