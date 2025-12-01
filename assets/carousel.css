@@ -1,6 +1,6 @@
-/* ===============================
-   CONTENEDOR PRINCIPAL DEL ITEM
-   =============================== */
+/* ============================================
+   CONTENEDOR DEL ITEM
+   ============================================ */
 
 .carousel-item {
   width: 260px;
@@ -16,34 +16,41 @@
   overflow: hidden;
 }
 
-/* ===============================
-   DOBLE IMAGEN PARA ANIMACIÓN
-   =============================== */
+/* ============================================
+   CONTENEDOR CON LAS 2 IMÁGENES
+   ============================================ */
 
 .carousel-dual {
   position: relative;
   width: 100%;
   height: 200px;
-  border-radius: 15px;
   overflow: hidden;
+  border-radius: 15px;
 }
 
+/* Las dos imágenes son capas libres */
 .carousel-dual img {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  top: 0;
-  left: 0;
+  will-change: transform, opacity;
+  z-index: 1;     /* Ambas se cruzan libremente */
+  opacity: 1;     /* Ambas siempre visibles */
   border-radius: 15px;
 }
 
-.img-current { z-index: 2; opacity: 1; }
-.img-next    { z-index: 1; opacity: 0; }
+/* Imagen actual */
+.img-current { }
 
-/* ===============================
+/* Imagen siguiente */
+.img-next { }
+
+/* ============================================
    TEXTO
-   =============================== */
+   ============================================ */
 
 .carousel-item-text {
   width: 100%;
@@ -56,9 +63,9 @@
   margin-top: 0.3rem;
 }
 
-/* ===============================
-   FONDO GRID
-   =============================== */
+/* ============================================
+   FONDO DEL GRID
+   ============================================ */
 
 .grid-background {
   background: linear-gradient(135deg, #bacaf2, #57677d);
@@ -69,9 +76,9 @@
   width: 100%;
 }
 
-/* ===============================
-   EFECTO FADE IN GLOBAL
-   =============================== */
+/* ============================================
+   FADE DE ENTRADA GLOBAL
+   ============================================ */
 
 body {
   opacity: 0;
@@ -82,6 +89,7 @@ body {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
 
 
 

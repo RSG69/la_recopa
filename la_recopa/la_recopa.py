@@ -176,80 +176,104 @@ def cuerpo():
         # SCRIPT con animación suave + doble imagen
         rx.script(r"""
 (function(){
-  const IN_DURATION  = 2000;
-  const OUT_DURATION = 1800;
-  const VISIBLE_MS   = 3000;
 
-  const anims = {
-    up: {
-      in:  [{ transform: "translateY(40%)", opacity: 0 },
-            { transform: "translateY(0)", opacity: 1 }],
-      out: [{ transform: "translateY(0)", opacity: 1 },
-            { transform: "translateY(-40%)", opacity: 0 }]
-    },
-    down: {
-      in:  [{ transform: "translateY(-40%)", opacity: 0 },
-            { transform: "translateY(0)", opacity: 1 }],
-      out: [{ transform: "translateY(0)", opacity: 1 },
-            { transform: "translateY(40%)", opacity: 0 }]
-    },
-    left: {
-      in:  [{ transform: "translateX(40%)", opacity: 0 },
-            { transform: "translateX(0)", opacity: 1 }],
-      out: [{ transform: "translateX(0)", opacity: 1 },
-            { transform: "translateX(-40%)", opacity: 0 }]
-    },
-    right: {
-      in:  [{ transform: "translateX(-40%)", opacity: 0 },
-            { transform: "translateX(0)", opacity: 1 }],
-      out: [{ transform: "translateX(0)", opacity: 1 },
-            { transform: "translateX(40%)", opacity: 0 }]
-    },
-    fade: {
-      in:  [{ opacity: 0 }, { opacity: 1 }],
-      out: [{ opacity: 1 }, { opacity: 0 }]
-    }
+  /* ANIMACIONES MÁS LENTAS */
+  const TIME_IN   = 1800;   // antes 1200
+  const TIME_OUT  = 2000;   // antes 1200
+  const VISIBLE   = 3500;   // antes 2500
+
+  const dirs = {
+    up:    { out_to: "translateY(-100%)", in_from: "translateY(100%)" },
+    down:  { out_to: "translateY(100%)",  in_from: "translateY(-100%)" },
+    left:  { out_to: "translateX(-100%)", in_from: "translateX(100%)" },
+    right: { out_to: "translateX(100%)",  in_from: "translateX(-100%)" }
   };
 
-  const buttons = ["next-desayuno","next-almuerzo","next-tapa","next-plato"];
-  const wait = ms => new Promise(res => setTimeout(res, ms));
+  const wait = ms => new Promise(r => setTimeout(r, ms));
 
-  async function runDual(current, next, idx) {
-    const dir = current.dataset.direction || "fade";
-    const anim = anims[dir];
-    const btnId = buttons[idx];
+  const nextBtn = [
+    "next-desayuno",
+    "next-almuerzo",
+    "next-tapa",
+    "next-plato"
+  ];
+
+  async function runCell(current, next, idx) {
+
+    const direction = current.dataset.direction;
+    const conf = dirs[direction];
 
     while (true) {
-      const nextSrc = next.src;
 
-      await next.animate(anim.in, { duration: IN_DURATION, fill: "forwards" }).finished;
-      await wait(VISIBLE_MS);
-      await current.animate(anim.out, { duration: OUT_DURATION, fill: "forwards" }).finished;
+      /* 1. Guardamos el SRC actual (imagen VIEJA) */
+      const oldSrc = current.src;
 
-      document.getElementById(btnId)?.click();
+      /* 2. Pedimos al backend la nueva imagen */
+      document.getElementById(nextBtn[idx]).click();
 
-      await wait(40);
+      /* 3. Esperamos a que Reflex cargue la NUEVA en current.src */
+      await wait(80);
 
-      current.src = nextSrc;
-      current.style.opacity = 1;
+      const newSrc = current.src;  // ESTA es la nueva imagen
+
+      /* 4. Aplicamos la lógica CORRECTA:  
+         - current = la imagen vieja (sale)
+         - next    = la imagen nueva (entra)
+      */
+      current.src = oldSrc;  
+      next.src = newSrc;
+
+      /* 5. Preparamos la nueva imagen fuera de pantalla */
+      next.style.transform = conf.in_from;
+
+      /* 6. Animación de entrada (imagen nueva) */
+      const animIn = next.animate(
+        [
+          { transform: conf.in_from },
+          { transform: "translateX(0) translateY(0)" }
+        ],
+        { duration: TIME_IN, easing: "ease-out", fill: "forwards" }
+      );
+
+      /* 7. Animación de salida (imagen vieja) */
+      const animOut = current.animate(
+        [
+          { transform: "translateX(0) translateY(0)" },
+          { transform: conf.out_to }
+        ],
+        { duration: TIME_OUT, easing: "ease-in", fill: "forwards" }
+      );
+
+      /* 8. Esperar ambas animaciones */
+      await Promise.all([animIn.finished, animOut.finished]);
+
+      /* 9. La imagen nueva pasa a ser la actual */
+      current.src = newSrc;
+
+      /* 10. Reset posiciones */
       current.style.transform = "none";
-
-      next.style.opacity = 0;
       next.style.transform = "none";
+
+      /* 11. Pausa antes del siguiente cambio */
+      await wait(VISIBLE);
     }
   }
 
+  /* Inicializar celdas */
   setTimeout(() => {
-    const pairs = [...document.querySelectorAll(".carousel-dual")]
-      .map(box => [
-        box.querySelector(".img-current"),
-        box.querySelector(".img-next")
-      ]);
+    const boxes = [...document.querySelectorAll(".carousel-dual")];
 
-    pairs.forEach((pair, idx) => runDual(pair[0], pair[1], idx));
+    boxes.forEach((box, idx) => {
+      const current = box.querySelector(".img-current");
+      const next    = box.querySelector(".img-next");
+      runCell(current, next, idx);
+    });
+
   }, 400);
 
 })();
+
+
         """)
     )
 
