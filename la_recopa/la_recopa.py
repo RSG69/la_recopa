@@ -45,7 +45,7 @@ def crear_celda(titulo, lista, direccion, gradiente):
 
         rx.vstack(
             rx.heading(titulo, font_family="Playfair Display, serif", font_size="4xl",
-                       font_weight="bold", color="white", text_align="center",
+                       font_weight="bold", color="white", text_align="left",
                        text_shadow="1px 1px 4px rgba(0,0,0,0.5)"),
 
             
