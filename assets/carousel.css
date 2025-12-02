@@ -69,6 +69,13 @@ body {
   to { opacity: 1; }
 }
 
+/* Pequeños ajustes responsivos */
+@media (max-width: 600px) {
+  .carousel-box { width: 90%; height: 180px; }
+  .carousel-item { width: 95%; }
+}
+
+
 
 
 
