@@ -7,7 +7,7 @@ import reflex as rx
 custom_theme = rx.theme(color_scheme="orange")
 
 # ==========================================================
-#   LISTAS: textos + imágenes
+#   LISTAS (texto + imagen)
 # ==========================================================
 DESAYUNOS = [
     ["Café con leche y croissant", "/Cafe_con_leche_y_cruasan.jpg"],
@@ -42,17 +42,15 @@ def crear_celda(titulo, lista, direccion, gradiente):
     rutas = [img for (_, img) in lista]
 
     return rx.box(
+
         rx.vstack(
+            rx.heading(titulo, font_family="Playfair Display, serif", font_size="4xl",
+                       font_weight="bold", color="white", text_align="center",
+                       text_shadow="1px 1px 4px rgba(0,0,0,0.5)"),
 
-            rx.heading(
-                titulo,
-                font_family="Playfair Display",
-                font_size="3xl",
-                color="white",
-                text_shadow="1px 1px 4px rgba(0,0,0,0.5)",
-            ),
+            
 
-            # Imagen inicial (solo una)
+            # SOLO UNA IMAGEN. El JS cambia las demás.
             rx.box(
                 rx.image(src=rutas[0], class_name="carousel-img"),
                 class_name="carousel-box",
@@ -61,15 +59,14 @@ def crear_celda(titulo, lista, direccion, gradiente):
                 data_texts=json.dumps(textos),
             ),
 
-            # Texto dinámico
-            rx.text(textos[0], class_name="carousel-item-text carousel-text"),
+            rx.text(
+                textos[0],
+                class_name="carousel-item-text carousel-text",
+            ),
         ),
 
-        padding="12px",
-        border_radius="18px",
+        class_name="carousel-item",
         background=gradiente,
-        border="3px solid rgba(255,255,255,0.4)",
-        box_shadow="0 6px 16px rgba(0,0,0,0.25)",
     )
 
 # ==========================================================
@@ -111,35 +108,28 @@ def footer():
     )
 
 # ==========================================================
-#   CUERPO + JAVASCRIPT
+#   CUERPO + JS
 # ==========================================================
 def cuerpo():
     return rx.box(
 
         rx.box(
             rx.grid(
-                crear_celda(
-                    "DESAYUNOS", DESAYUNOS, "up",
-                    "linear-gradient(135deg, #e6c193, #ED8F03)"
-                ),
 
-                crear_celda(
-                    "ALMUERZOS", ALMUERZOS, "down",
-                    "linear-gradient(135deg, #43C6AC, #191654)"
-                ),
+                crear_celda("DESAYUNOS", DESAYUNOS, "up",
+                            "linear-gradient(135deg,#e6c193,#ED8F03)"),
 
-                crear_celda(
-                    "TAPAS", TAPAS, "left",
-                    "linear-gradient(135deg, #F7971E, #FFD200)"
-                ),
+                crear_celda("ALMUERZOS", ALMUERZOS, "down",
+                            "linear-gradient(135deg,#43C6AC,#191654)"),
 
-                crear_celda(
-                    "PLATOS", PLATOS, "right",
-                    "linear-gradient(135deg, #8360c3, #2ebf91)"
-                ),
+                crear_celda("TAPAS", TAPAS, "left",
+                            "linear-gradient(135deg,#F7971E,#FFD200)"),
+
+                crear_celda("PLATOS", PLATOS, "right",
+                            "linear-gradient(135deg,#8360c3,#2ebf91)"),
 
                 columns=rx.breakpoints(sm="1", md="2", lg="3"),
-                spacing="6",
+                spacing="5",
                 justify="center",
             ),
 
@@ -148,50 +138,59 @@ def cuerpo():
             class_name="grid-background",
         ),
 
-        # ------------------------------------------------
-        #   JAVASCRIPT COMPLETO (IMAGEN + TEXTO ANIMADO)
-        # ------------------------------------------------
+        # -------------------------------------------------------
+        # JS COMPLETO: texto sale antes + dimensiones fijas
+        # -------------------------------------------------------
         rx.script(r"""
 (function(){
 
-  const TIME_IN  = 1800;
-  const TIME_OUT = 1800;
-  const PAUSE    = 3800;
+  const TIME_IN  = 1500;
+  const TIME_OUT = 1500;
+  const PAUSE    = 3500;
 
   const wait = ms => new Promise(res => setTimeout(res, ms));
 
   const directions = {
-    up:    { in_from: "translateY(100%)", out_to: "translateY(-100%)" },
-    down:  { in_from: "translateY(-100%)", out_to: "translateY(100%)" },
-    left:  { in_from: "translateX(100%)", out_to: "translateX(-100%)" },
-    right: { in_from: "translateX(-100%)", out_to: "translateX(100%)" }
+    up:    { in_from: "translateY(120%)", out_to: "translateY(-120%)" },
+    down:  { in_from: "translateY(-120%)", out_to: "translateY(120%)" },
+    left:  { in_from: "translateX(120%)", out_to: "translateX(-120%)" },
+    right: { in_from: "translateX(-120%)", out_to: "translateX(120%)" }
   };
 
   function animateCell(box) {
     const images = JSON.parse(box.dataset.images || "[]");
     const texts  = JSON.parse(box.dataset.texts  || "[]");
-    const direction = box.dataset.direction;
-    const conf = directions[direction];
 
     if (images.length === 0) return;
 
+    const direction = box.dataset.direction;
+    const conf = directions[direction];
+
     let index = 0;
 
-    const imgOld = box.querySelector("img");
+    let imgOld = box.querySelector("img");
     imgOld.src = images[0];
 
     const textEl = box.parentElement.querySelector(".carousel-text");
-    if (textEl) textEl.innerText = texts[0];
+    textEl.innerText = texts[0];
 
     async function loop() {
-
       const oldImg = box.querySelector("img");
 
       index = (index + 1) % images.length;
-      let newSrc  = images[index];
-      let newText = texts[index];
+      const newSrc  = images[index];
+      const newText = texts[index];
 
-      // crear imagen nueva
+      /* 1) EL TEXTO SALE ANTES */
+      await textEl.animate(
+        [
+          { opacity: 1, transform: "translateY(0)" },
+          { opacity: 0, transform: "translateY(-20px)" }
+        ],
+        { duration: 450, easing: "ease-in", fill: "forwards" }
+      ).finished;
+
+      /* 2) LA IMAGEN CAMBIA */
       const imgNew = document.createElement("img");
       imgNew.src = newSrc;
       imgNew.style.position = "absolute";
@@ -200,51 +199,32 @@ def cuerpo():
       imgNew.style.width = "100%";
       imgNew.style.height = "100%";
       imgNew.style.objectFit = "cover";
-      imgNew.style.borderRadius = "15px";
       imgNew.style.transform = conf.in_from;
 
       box.appendChild(imgNew);
 
-      // ---- TEXTO SALIENDO (fade + slide) ----
-      let textOut = textEl.animate(
-        [
-          { opacity: 1, transform: "translateY(0)" },
-          { opacity: 0, transform: "translateY(-15px)" }
-        ],
-        { duration: 400, easing: "ease-in" }
-      );
-
-      // imagen entrando
       const aIn = imgNew.animate(
-        [
-          { transform: conf.in_from },
-          { transform: "translateX(0) translateY(0)" }
-        ],
-        { duration: TIME_IN, easing: "ease-out" }
+        [{ transform: conf.in_from }, { transform: "translate(0,0)" }],
+        { duration: TIME_IN, easing: "ease-out", fill: "forwards" }
       );
 
-      // imagen saliendo
       const aOut = oldImg.animate(
-        [
-          { transform: "translateX(0) translateY(0)" },
-          { transform: conf.out_to }
-        ],
-        { duration: TIME_OUT, easing: "ease-in" }
+        [{ transform: "translate(0,0)" }, { transform: conf.out_to }],
+        { duration: TIME_OUT, easing: "ease-in", fill: "forwards" }
       );
 
-      await Promise.all([aIn.finished, aOut.finished, textOut.finished]);
+      await Promise.all([aIn.finished, aOut.finished]);
 
       oldImg.remove();
-      imgNew.style.transform = "none";
 
-      // ---- TEXTO ENTRANDO (fade + slide) ----
+      /* 3) EL TEXTO ENTRA DESPUÉS */
       textEl.innerText = newText;
       textEl.animate(
         [
-          { opacity: 0, transform: "translateY(15px)" },
+          { opacity: 0, transform: "translateY(20px)" },
           { opacity: 1, transform: "translateY(0)" }
         ],
-        { duration: 500, easing: "ease-out" }
+        { duration: 600, easing: "ease-out", fill: "forwards" }
       );
 
       await wait(PAUSE);
@@ -256,25 +236,32 @@ def cuerpo():
 
   setTimeout(() => {
     document.querySelectorAll(".carousel-box").forEach(animateCell);
-  }, 400);
+  }, 300);
 
 })();
+
         """)
     )
 
 
 def galeria():
-    return rx.box(header(), cuerpo(), footer())
+    return rx.box(
+        header(),
+        cuerpo(),
+        footer(),
+    )
 
 
-# ==========================================================
-#   APP
-# ==========================================================
-app = rx.App(stylesheets=["/carousel.css"], theme=custom_theme)
+app = rx.App(
+    stylesheets=["/carousel.css"],
+    theme=custom_theme,
+)
+
 app.add_page(galeria, title="La Recopa", route="/")
 
 if __name__ == "__main__":
     app.run()
+
 
 
 
