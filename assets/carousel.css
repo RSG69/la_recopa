@@ -1,6 +1,6 @@
-/* ============================================
-   CONTENEDOR DEL ITEM
-   ============================================ */
+/* ==========================================================
+   CONTENEDOR PRINCIPAL DEL ITEM
+   ========================================================== */
 
 .carousel-item {
   width: 260px;
@@ -16,41 +16,50 @@
   overflow: hidden;
 }
 
-/* ============================================
-   CONTENEDOR CON LAS 2 IMÁGENES
-   ============================================ */
+/* ==========================================================
+   FONDO Y DISEÑO DEL GRID
+   ========================================================== */
 
-.carousel-dual {
-  position: relative;
+.grid-background {
+  background: linear-gradient(135deg, #bacaf2, #57677d);
+  padding: 60px 0;
   width: 100%;
-  height: 200px;
-  overflow: hidden;
-  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Las dos imágenes son capas libres */
-.carousel-dual img {
+/* ==========================================================
+   SOLO UNA IMAGEN POR CELDA: EL JS CREA LAS DEMÁS
+   ========================================================== */
+
+.carousel-box {
+  width: 260px;
+  height: 200px;
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+/* Todas las imágenes dentro del carrusel */
+.carousel-box img {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+
+  /* Importante para suavizar animación */
   will-change: transform, opacity;
-  z-index: 1;     /* Ambas se cruzan libremente */
-  opacity: 1;     /* Ambas siempre visibles */
+
   border-radius: 15px;
 }
 
-/* Imagen actual */
-.img-current { }
-
-/* Imagen siguiente */
-.img-next { }
-
-/* ============================================
-   TEXTO
-   ============================================ */
+/* ==========================================================
+   TEXTO DEBAJO DE LA IMAGEN
+   ========================================================== */
 
 .carousel-item-text {
   width: 100%;
@@ -63,22 +72,9 @@
   margin-top: 0.3rem;
 }
 
-/* ============================================
-   FONDO DEL GRID
-   ============================================ */
-
-.grid-background {
-  background: linear-gradient(135deg, #bacaf2, #57677d);
-  padding: 60px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-/* ============================================
-   FADE DE ENTRADA GLOBAL
-   ============================================ */
+/* ==========================================================
+   EFECTO FADE-IN INICIAL DE LA PÁGINA
+   ========================================================== */
 
 body {
   opacity: 0;
@@ -89,6 +85,7 @@ body {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
 
 
 
