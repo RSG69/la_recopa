@@ -100,8 +100,8 @@
 
 /* TEXTO INFERIOR (centrado) */
 .carousel-item-text{
-  margin-top: 14px;       /* antes auto — AHORA menos espacio */
-  margin-bottom: 10px;    /* opcionally small bottom padding */
+  margin-top: -20px;      /* Subimos el texto, menos espacio sobre él */
+  margin-bottom: 0px;   /* Muy poco espacio abajo */
   width: 100%;
   text-align: center;
   font-size: 19px;
