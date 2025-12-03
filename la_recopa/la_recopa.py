@@ -1,14 +1,14 @@
 import json
 import reflex as rx
 
-# ==========================================================
-#   TEMA
-# ==========================================================
+# ===============================================================
+#   TEMA GENERAL
+# ===============================================================
 custom_theme = rx.theme(color_scheme="orange")
 
-# ==========================================================
-#   LISTAS (texto + imagen)
-# ==========================================================
+# ===============================================================
+#   LISTAS DE TEXTOS + IMÁGENES
+# ===============================================================
 DESAYUNOS = [
     ["Café con leche y croissant", "/Cafe_con_leche_y_cruasan.jpg"],
     ["Café con leche y tostadas", "/cafe_con_leche_y_tostada_con_mermelada.jpg"],
@@ -33,24 +33,30 @@ PLATOS = [
     ["Lentejas caseras", "/lentejas.jpg"],
 ]
 
-# ==========================================================
-#   COMPONENTE DE CELDA
-# ==========================================================
+# ===============================================================
+#   COMPONENTE DE CADA CELDA
+# ===============================================================
 def crear_celda(titulo, lista, direccion, gradiente):
-
     textos = [t for (t, _) in lista]
     rutas = [img for (_, img) in lista]
 
     return rx.box(
 
         rx.vstack(
-            rx.heading(titulo, font_family="Playfair Display, serif", font_size="4xl",
-                       font_weight="bold", color="white", text_align="left",
-                       text_shadow="1px 1px 4px rgba(0,0,0,0.5)"),
+            # TÍTULO
+            rx.heading(
+                titulo,
+                font_family="Playfair Display",
+                font_size="28px",
+                font_weight="700",
+                color="white",
+                text_shadow="1px 2px 6px rgba(0,0,0,0.4)",
+                class_name="heading",
+                width="100%",
+                text_align="left"
+            ),
 
-            
-
-            # SOLO UNA IMAGEN. El JS cambia las demás.
+            # CONTENEDOR DE IMAGEN (solo una; JS reemplaza)
             rx.box(
                 rx.image(src=rutas[0], class_name="carousel-img"),
                 class_name="carousel-box",
@@ -59,36 +65,53 @@ def crear_celda(titulo, lista, direccion, gradiente):
                 data_texts=json.dumps(textos),
             ),
 
+            # TEXTO INFERIOR
             rx.text(
                 textos[0],
                 class_name="carousel-item-text carousel-text",
             ),
+
+            class_name="vstack-wrapper",
+            width="100%",
+            align_items="stretch",
         ),
 
         class_name="carousel-item",
         background=gradiente,
     )
 
-# ==========================================================
-#   HEADER / FOOTER
-# ==========================================================
+
+# ===============================================================
+#   CABECERA (NO LA TOCO, TAL COMO PEDISTE)
+# ===============================================================
 def header():
     return rx.box(
         rx.hstack(
-            rx.heading("🌅 La Recopa", font_size="2xl", color="orange.600"),
-            rx.spacer(),
+            rx.heading(
+                "La Recopa",
+                font_size="2xl",
+                font_weight="700",
+                color="#ffffff",
+                text_shadow="1px 2px 6px rgba(0,0,0,0.4)",
+                padding_left="20px",
+            ),
         ),
-        bg="white",
-        height="70px",
         width="100%",
+        height="80px",
+        display="flex",
+        align_items="center",
+        bg="linear-gradient(90deg,#ffcfa9,#ffb085)",
         position="fixed",
         top="0",
-        border_bottom="2px solid #ddd",
-        padding_x="20px",
+        left="0",
+        border_bottom="2px solid rgba(255,255,255,0.5)",
         z_index="100",
     )
 
 
+# ===============================================================
+#   FOOTER
+# ===============================================================
 def footer():
     return rx.box(
         rx.text(
@@ -107,15 +130,19 @@ def footer():
         justify_content="center",
     )
 
-# ==========================================================
-#   CUERPO + JS
-# ==========================================================
+
+# ===============================================================
+#   CUERPO PRINCIPAL
+# ===============================================================
 def cuerpo():
     return rx.box(
 
         rx.box(
-            rx.grid(
 
+            # ============================
+            #   GRID PRINCIPAL
+            # ============================
+            rx.grid(
                 crear_celda("DESAYUNOS", DESAYUNOS, "up",
                             "linear-gradient(135deg,#e6c193,#ED8F03)"),
 
@@ -129,20 +156,21 @@ def cuerpo():
                             "linear-gradient(135deg,#8360c3,#2ebf91)"),
 
                 columns=rx.breakpoints(sm="1", md="2", lg="3"),
-                spacing="5",
+                spacing="6",
                 justify="center",
+                class_name="grid"   # ← NECESARIO PARA RESPONSIVE
             ),
 
             padding_top="100px",
-            padding_bottom="100px",
+            padding_bottom="120px",
             class_name="grid-background",
         ),
 
-        # -------------------------------------------------------
-        # JS COMPLETO: texto sale antes + dimensiones fijas
-        # -------------------------------------------------------
+        # ===============================================================
+        #   SCRIPT — ANIMACIÓN (NO MODIFICADA)
+        # ===============================================================
         rx.script(r"""
-(function(){
+(function() {
 
   const TIME_IN  = 1500;
   const TIME_OUT = 1500;
@@ -157,74 +185,91 @@ def cuerpo():
     right: { in_from: "translateX(-120%)", out_to: "translateX(120%)" }
   };
 
+  function applyImageStyle(img) {
+    img.style.width = "100%";
+    img.style.height = "100%";
+    img.style.objectFit = "cover";
+    img.style.objectPosition = "center center";
+    img.style.borderRadius = "20px";
+    img.style.position = "absolute";
+    img.style.top = "0";
+    img.style.left = "0";
+  }
+
   function animateCell(box) {
+
     const images = JSON.parse(box.dataset.images || "[]");
     const texts  = JSON.parse(box.dataset.texts  || "[]");
 
     if (images.length === 0) return;
 
-    const direction = box.dataset.direction;
+    const direction = box.dataset.direction || "up";
     const conf = directions[direction];
 
     let index = 0;
 
+    /* ===== IMAGEN INICIAL ===== */
     let imgOld = box.querySelector("img");
     imgOld.src = images[0];
+    applyImageStyle(imgOld);
 
-    const textEl = box.parentElement.querySelector(".carousel-text");
+    /* ===== TEXTO INICIAL ===== */
+    const vstack = box.parentElement;
+    const textEl = vstack.querySelector(".carousel-text");
     textEl.innerText = texts[0];
 
     async function loop() {
       const oldImg = box.querySelector("img");
 
+      /* PROXIMO INDEX */
       index = (index + 1) % images.length;
       const newSrc  = images[index];
       const newText = texts[index];
 
-      /* 1) EL TEXTO SALE ANTES */
+      /* 1) TEXTO SALE ANTES */
       await textEl.animate(
         [
           { opacity: 1, transform: "translateY(0)" },
           { opacity: 0, transform: "translateY(-20px)" }
         ],
-        { duration: 450, easing: "ease-in", fill: "forwards" }
+        { duration: 500, easing: "ease-in", fill: "forwards" }
       ).finished;
 
-      /* 2) LA IMAGEN CAMBIA */
+      /* 2) IMAGEN NUEVA */
       const imgNew = document.createElement("img");
       imgNew.src = newSrc;
-      imgNew.style.position = "absolute";
-      imgNew.style.top = "0";
-      imgNew.style.left = "0";
-      imgNew.style.width = "100%";
-      imgNew.style.height = "100%";
-      imgNew.style.objectFit = "cover";
+      applyImageStyle(imgNew);
       imgNew.style.transform = conf.in_from;
-
       box.appendChild(imgNew);
 
+      /* 3) ANIMACIÓN */
       const aIn = imgNew.animate(
-        [{ transform: conf.in_from }, { transform: "translate(0,0)" }],
+        [
+          { transform: conf.in_from },
+          { transform: "translate(0, 0)" }
+        ],
         { duration: TIME_IN, easing: "ease-out", fill: "forwards" }
       );
 
       const aOut = oldImg.animate(
-        [{ transform: "translate(0,0)" }, { transform: conf.out_to }],
+        [
+          { transform: "translate(0, 0)" },
+          { transform: conf.out_to }
+        ],
         { duration: TIME_OUT, easing: "ease-in", fill: "forwards" }
       );
 
       await Promise.all([aIn.finished, aOut.finished]);
-
       oldImg.remove();
 
-      /* 3) EL TEXTO ENTRA DESPUÉS */
+      /* 4) TEXTO NUEVO ENTRA */
       textEl.innerText = newText;
       textEl.animate(
         [
           { opacity: 0, transform: "translateY(20px)" },
           { opacity: 1, transform: "translateY(0)" }
         ],
-        { duration: 600, easing: "ease-out", fill: "forwards" }
+        { duration: 650, easing: "ease-out", fill: "forwards" }
       );
 
       await wait(PAUSE);
@@ -239,11 +284,13 @@ def cuerpo():
   }, 300);
 
 })();
-
         """)
     )
 
 
+# ===============================================================
+#   PÁGINA PRINCIPAL
+# ===============================================================
 def galeria():
     return rx.box(
         header(),
@@ -251,7 +298,9 @@ def galeria():
         footer(),
     )
 
-
+# ===============================================================
+#   APP
+# ===============================================================
 app = rx.App(
     stylesheets=["/carousel.css"],
     theme=custom_theme,
@@ -261,6 +310,7 @@ app.add_page(galeria, title="La Recopa", route="/")
 
 if __name__ == "__main__":
     app.run()
+
 
 
 

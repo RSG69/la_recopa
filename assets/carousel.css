@@ -1,99 +1,177 @@
-/* ====================== VARIABLES ====================== */
-:root {
-  --card-width: 340px;      /* celda un poco más pequeña */
-  --card-height: 420px;
-  --image-height: 220px;    /* imagen más pequeña */
-  --radius: 20px;           /* bordes redondeados como la foto */
+/* =======================
+   VARIABLES GLOBALES
+   ======================= */
+:root{
+  --gap: 36px;
+  --card-w-desktop: 360px;   /* ancho tarjeta (desktop) */
+  --card-h-desktop: 350px;   /* alto tarjeta (desktop) */
+  --img-h-desktop: 220px;    /* alto area imagen (desktop) */
+  --radius: 20px;
+  --bg-start: #fddac7;
+  --bg-end:   #f7bfa8;
 }
 
-/* ====================== FONDO ====================== */
+/* =======================
+   FONDO DEL LAYOUT
+   ======================= */
 .grid-background {
   min-height: 100vh;
-  padding: 80px 40px;
-  background: linear-gradient(135deg,#faddc6,#f5b9a6); /* igual que foto */
+  padding: 110px 28px 140px 28px;
+  background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  box-sizing: border-box;
 }
 
-/* ====================== GRID ====================== */
-.grid {
+/* =======================
+   GRID PRINCIPAL
+   ======================= */
+/* Asegúrate de que tu rx.grid tenga class_name="grid" */
+.grid{
   display: grid;
-  grid-template-columns: repeat(3, var(--card-width));
-  gap: 40px;                  /* separación exacta como la foto */
+  grid-template-columns: repeat(3, var(--card-w-desktop));
+  gap: var(--gap);
   align-items: start;
+  justify-content: center;
 }
 
-@media (max-width: 1100px) {
-  .grid { grid-template-columns: repeat(2, var(--card-width)); }
-}
-@media (max-width: 720px) {
-  .grid { grid-template-columns: 1fr; }
-}
-
-/* ====================== CELDA ====================== */
-.carousel-item {
-  width: var(--card-width);
-  height: var(--card-height);
-  padding: 20px;
+/* =======================
+   TARJETA (CELDA)
+   ======================= */
+.carousel-item{
+  width: var(--card-w-desktop);
+  height: var(--card-h-desktop);
+  padding: 22px;
   border-radius: var(--radius);
-  background: rgba(255,255,255,0.12);
-  border: 2px solid rgba(255,255,255,0.5);
-  box-shadow: 0px 8px 18px rgba(0,0,0,0.22);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.35);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.20);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
+  box-sizing: border-box;
 }
 
-/* ====================== TÍTULO ====================== */
-.carousel-item > h3,
-.carousel-item > .heading {
+/* TITULO (alineado a la izquierda, como en la captura) */
+.carousel-item > .heading,
+.carousel-item > h3 {
   font-family: "Playfair Display", serif;
   font-size: 26px;
   font-weight: 700;
-  color: white;
-  margin: 0 0 18px 0;
-  width: 100%;
-  text-align: left;          /* IGUAL QUE LA FOTO */
-  padding-left: 5px;
-  text-shadow: 0px 3px 6px rgba(0,0,0,0.4);
+  color: #ffffff;
+  margin: 0 0 14px 0;
+  text-align: left;
+  padding-left: 6px;
+  text-shadow: 0 3px 8px rgba(0,0,0,0.45);
 }
 
-/* ====================== CONTENEDOR IMAGEN ====================== */
-.carousel-box {
+/* =======================
+   CONTENEDOR DE IMAGEN (MISMO TAMAÑO SIEMPRE)
+   ======================= */
+.carousel-box{
   width: 100%;
-  height: 240px;                 /* MISMA ALTURA EXACTA PARA TODAS */
-  border-radius: 20px;           /* borde uniforme */
+  height: var(--img-h-desktop);
+  border-radius: calc(var(--radius) - 4px);
   overflow: hidden;
+  background: #000;
   position: relative;
-  margin-bottom: 22px;
-  padding: 0;
-  background: #000;              /* evita bordes blancos */
+  margin-bottom: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-sizing: border-box;
 }
 
-/* ====================== FOTO ====================== */
-.carousel-box img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover !important;  /* recorte uniforme */
-  object-position: center center;/* centra la parte útil */
-  border-radius: 20px;
+/* IMAGEN: fuerza recorte uniforme */
+.carousel-box img{
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: 50% 50% !important;
+  border-radius: calc(var(--radius) - 4px);
   display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-/* ====================== TEXTO ====================== */
-.carousel-item-text {
-  font-size: 20px;
-  font-weight: 700;
-  color: white;
-  text-align: center;
-  text-shadow: 0px 4px 10px rgba(0,0,0,0.45);
-  margin-top: auto;
+/* TEXTO INFERIOR (centrado) */
+.carousel-item-text{
+  margin-top: 14px;       /* antes auto — AHORA menos espacio */
+  margin-bottom: 10px;    /* opcionally small bottom padding */
   width: 100%;
+  text-align: center;
+  font-size: 19px;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 3px 8px rgba(0,0,0,0.45);
+  padding: 0px;
 }
+
+/* Pequeño ajuste para el contenedor vertical que envuelve (si usas vstack) */
+.vstack-wrapper {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* =======================
+   RESPONSIVE
+   ======================= */
+
+/* Tablets / medium screens */
+@media (max-width: 1100px) {
+  :root{
+    --card-w-desktop: 320px;
+    --card-h-desktop: 460px;
+    --img-h-desktop: 210px;
+  }
+  .grid{
+    grid-template-columns: repeat(2, var(--card-w-desktop));
+    gap: 28px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 720px) {
+  :root{
+    --card-w-desktop: 92%;
+    --card-h-desktop: auto;   /* altura flexible en móvil */
+    --img-h-desktop: 200px;
+  }
+  .grid{
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+    gap: 20px;
+  }
+  .carousel-item{
+    width: var(--card-w-desktop);
+    height: auto;
+    padding: 18px;
+  }
+  .carousel-box{
+    height: var(--img-h-desktop);
+  }
+  .carousel-item > .heading,
+  .carousel-item > h3{
+    font-size: 22px;
+  }
+  .carousel-item-text{
+    font-size: 17px;
+  }
+}
+
+/* Small tweaks */
+@media (max-width: 420px){
+  .carousel-box{ height: 180px; }
+  .carousel-item > .heading{ font-size: 20px; }
+  .carousel-item-text{ font-size: 15px; }
+}
+
 
 
 
