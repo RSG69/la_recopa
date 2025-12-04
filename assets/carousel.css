@@ -1,18 +1,28 @@
-/* =======================
-   VARIABLES GLOBALES
-   ======================= */
 :root{
   --gap: 36px;
-  --card-w-desktop: 360px;   /* ancho tarjeta (desktop) */
-  --card-h-desktop: 350px;   /* alto tarjeta (desktop) */
-  --img-h-desktop: 210px;    /* alto area imagen (desktop) */
-  --radius: 20px;
+
+  /* Tamaños controlados */
+  --card-w-desktop: 360px;
+  --card-h-desktop: 350px;
+
+  --card-w-tablet: 320px;
+  --card-h-tablet: 350px;
+
+  --card-w-mobile: 92%;
+  --card-h-mobile: auto;
+
+  --img-h-desktop: 210px;
+  --img-h-tablet: 200px;
+  --img-h-mobile: 180px;
+
+  --radius: 22px;
+
   --bg-start: #fddac7;
   --bg-end:   #f7bfa8;
 }
 
 /* =======================
-   FONDO DEL LAYOUT
+   FONDO
    ======================= */
 .grid-background {
   min-height: 100vh;
@@ -20,14 +30,11 @@
   background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  box-sizing: border-box;
 }
 
 /* =======================
    GRID PRINCIPAL
    ======================= */
-/* Asegúrate de que tu rx.grid tenga class_name="grid" */
 .grid{
   display: grid;
   grid-template-columns: repeat(3, var(--card-w-desktop));
@@ -37,73 +44,64 @@
 }
 
 /* =======================
-   TARJETA (CELDA)
+   TARJETA
    ======================= */
 .carousel-item{
   width: var(--card-w-desktop);
   height: var(--card-h-desktop);
-  padding: 10px;
+  padding: 20px;
   border-radius: var(--radius);
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.35);
   box-shadow: 0 10px 22px rgba(0,0,0,0.20);
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  box-sizing: border-box;
-
 }
 
-/* TITULO (alineado a la izquierda, como en la captura) */
-.carousel-item > .heading,
-.carousel-item > h3 {
+/* =======================
+   TITULO
+   ======================= */
+.carousel-item .heading{
   font-family: "Playfair Display", serif;
   font-size: 26px;
   font-weight: 700;
   color: #ffffff;
-  margin: 0 0 14px 0;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  margin-bottom: 12px;
   text-align: left;
-  padding-left: 6px;
-  text-shadow: 0 3px 8px rgba(0,0,0,0.45);
+  width: 100%;
 }
 
 /* =======================
-   CONTENEDOR DE IMAGEN (MISMO TAMAÑO SIEMPRE)
+   IMAGEN
    ======================= */
 .carousel-box{
   width: 100%;
   height: var(--img-h-desktop);
+  background: #000;
   border-radius: calc(var(--radius) - 4px);
   overflow: hidden;
-  background: #000;
   position: relative;
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.12);
-  border: 1px solid rgba(255,255,255,0.12);
-  box-sizing: border-box;
+  margin-bottom: 10px;
 }
 
-/* IMAGEN: fuerza recorte uniforme */
 .carousel-box img{
   width: 100% !important;
   height: 100% !important;
   object-fit: cover !important;
-  object-position: 50% 50% !important;
+  object-position: center center !important;
   border-radius: calc(var(--radius) - 4px);
-  display: block;
   position: absolute;
   top: 0;
   left: 0;
 }
 
-/* TEXTO INFERIOR (centrado) */
+/* =======================
+   TEXTO INFERIOR
+   ======================= */
 .carousel-item-text{
-  margin-top: 0px;      /* Muy cerca de la imagen */
-  margin-bottom: 5px;   /* Muy poco espacio abajo */
-  padding: 0;
+  margin-top: 4px;
+  margin-bottom: 4px;
   text-align: center;
   font-size: 19px;
   font-weight: 800;
@@ -111,66 +109,38 @@
   text-shadow: 0 3px 8px rgba(0,0,0,0.45);
 }
 
-/* Pequeño ajuste para el contenedor vertical que envuelve (si usas vstack) */
-.vstack-wrapper {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  align-items: stretch;
+/* =======================
+   RESPONSIVE — TABLET
+   ======================= */
+@media (max-width: 1100px){
+  .grid{
+    grid-template-columns: repeat(2, var(--card-w-tablet));
+  }
+  .carousel-item{
+    width: var(--card-w-tablet);
+    height: var(--card-h-tablet);
+  }
+  .carousel-box{
+    height: var(--img-h-tablet);
+  }
 }
 
 /* =======================
-   RESPONSIVE
+   RESPONSIVE — MOBILE
    ======================= */
-
-/* Tablets / medium screens */
-@media (max-width: 1100px) {
-  :root{
-    --card-w-desktop: 320px;
-    --card-h-desktop: 460px;
-    --img-h-desktop: 210px;
-  }
-  .grid{
-    grid-template-columns: repeat(2, var(--card-w-desktop));
-    gap: 28px;
-  }
-}
-
-/* Mobile */
-@media (max-width: 720px) {
-  :root{
-    --card-w-desktop: 92%;
-    --card-h-desktop: auto;   /* altura flexible en móvil */
-    --img-h-desktop: 200px;
-  }
+@media (max-width: 720px){
   .grid{
     grid-template-columns: 1fr;
-    padding: 0 16px;
-    gap: 20px;
   }
   .carousel-item{
-    width: var(--card-w-desktop);
-    height: auto;
-    padding: 18px;
+    width: var(--card-w-mobile);
+    height: var(--card-h-mobile);
   }
   .carousel-box{
-    height: var(--img-h-desktop);
-  }
-  .carousel-item > .heading,
-  .carousel-item > h3{
-    font-size: 22px;
-  }
-  .carousel-item-text{
-    font-size: 17px;
+    height: var(--img-h-mobile);
   }
 }
 
-/* Small tweaks */
-@media (max-width: 420px){
-  .carousel-box{ height: 180px; }
-  .carousel-item > .heading{ font-size: 20px; }
-  .carousel-item-text{ font-size: 15px; }
-}
 
 
 
