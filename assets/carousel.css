@@ -22,14 +22,13 @@
 }
 
 /* =======================
-   FONDO
+   FONDO — ARREGLADO
    ======================= */
 .grid-background {
-  min-height: 100vh;
+  min-height: auto;  /* ← CORREGIDO */
   padding: 110px 28px 140px 28px;
+  display: block;    /* ← CORREGIDO */
   background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
-  display: flex;
-  justify-content: center;
 }
 
 /* =======================
@@ -110,35 +109,38 @@
 }
 
 /* ================================================================
-   RESPONSIVE — TABLET (★ respuesta 2 incluida ★)
+   RESPONSIVE — TABLET (incluye respuesta 2 + arreglo footer)
    ================================================================ */
 @media (max-width: 1100px){
 
-  /* Más espacio inferior para que aparezca el footer */
   .grid-background{
     padding-top: 60px;
-    padding-bottom: 140px; /* antes 80px */
+    padding-bottom: 140px;
+    min-height: auto;  /* ← necesario para que el footer aparezca */
+    display: block;    /* ← evita que tape al footer */
   }
 
+  /* 2 columnas compactas */
   .grid{
     grid-template-columns: repeat(2, var(--card-w-tablet));
-    gap: 22px 26px;
+    gap: 22px 26px;  /* (vertical, horizontal) */
   }
 
+  /* Tarjeta más compacta */
   .carousel-item{
     width: var(--card-w-tablet);
-    height: 310px;
+    height: 310px; /* antes 350px */
   }
 
+  /* Imagen más baja */
   .carousel-box{
-    height: 180px;
+    height: 180px; /* antes 200px */
   }
 
   .carousel-item-text{
     margin-top: -2px;
   }
 }
-
 
 /* =======================
    RESPONSIVE — MOBILE
@@ -157,6 +159,7 @@
     height: var(--img-h-mobile);
   }
 }
+
 
 
 
