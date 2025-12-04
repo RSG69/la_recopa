@@ -109,19 +109,36 @@
   text-shadow: 0 3px 8px rgba(0,0,0,0.45);
 }
 
-/* =======================
-   RESPONSIVE — TABLET
-   ======================= */
+/* ================================================================
+   RESPONSIVE — TABLET (★ respuesta 2 incluida ★)
+   ================================================================ */
 @media (max-width: 1100px){
+
+  /* Reducimos padding vertical para compactar */
+  .grid-background{
+    padding-top: 60px;
+    padding-bottom: 80px;
+  }
+
+  /* 2 columnas sin huecos grandes */
   .grid{
     grid-template-columns: repeat(2, var(--card-w-tablet));
+    gap: 22px 26px; /* (vertical, horizontal) */
   }
+
+  /* Tarjeta más compacta */
   .carousel-item{
     width: var(--card-w-tablet);
-    height: var(--card-h-tablet);
+    height: 310px; /* antes 350px */
   }
+
+  /* Imagen más baja */
   .carousel-box{
-    height: var(--img-h-tablet);
+    height: 180px; /* antes 200px */
+  }
+
+  .carousel-item-text{
+    margin-top: -2px;
   }
 }
 
@@ -132,14 +149,17 @@
   .grid{
     grid-template-columns: 1fr;
   }
+
   .carousel-item{
     width: var(--card-w-mobile);
     height: var(--card-h-mobile);
   }
+
   .carousel-box{
     height: var(--img-h-mobile);
   }
 }
+
 
 
 
