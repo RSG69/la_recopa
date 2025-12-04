@@ -173,8 +173,9 @@ def cuerpo():
                 class_name="grid"   # ← NECESARIO PARA RESPONSIVE
             ),
             rx.box(class_name="footer-spacer"),  # ← AÑADIR ESTO
-            padding_top="100px",
-            padding_bottom="120px",
+
+            #padding_top="100px",
+            #padding_bottom="120px",
             class_name="grid-background",
         ),
 
