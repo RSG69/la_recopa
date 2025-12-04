@@ -160,6 +160,11 @@
   }
 }
 
+.footer-spacer{
+  height: 80px;   /* suficiente para que el footer quede visible */
+  width: 100%;
+}
+
 
 
 
