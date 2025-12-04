@@ -155,6 +155,17 @@ def cuerpo():
 
                 crear_celda("PLATOS", PLATOS, "right",
                             "linear-gradient(135deg,#8360c3,#2ebf91)"),
+                crear_celda("DESAYUNOS", DESAYUNOS, "up",
+                            "linear-gradient(135deg,#e6c193,#ED8F03)"),
+
+                crear_celda("ALMUERZOS", ALMUERZOS, "down",
+                            "linear-gradient(135deg,#43C6AC,#191654)"),
+
+                crear_celda("TAPAS", TAPAS, "left",
+                            "linear-gradient(135deg,#F7971E,#FFD200)"),
+
+                crear_celda("PLATOS", PLATOS, "right",
+                            "linear-gradient(135deg,#8360c3,#2ebf91)"),
 
                 columns=rx.breakpoints(sm="1", md="2", lg="3"),
                 spacing="6",
