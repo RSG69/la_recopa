@@ -117,7 +117,8 @@
   /* Reducimos padding vertical para compactar */
   .grid-background{
     padding-top: 60px;
-    padding-bottom: 80px;
+    /*padding-bottom: 80px;*/
+    padding-bottom: 140px;
   }
 
   /* 2 columnas sin huecos grandes */
