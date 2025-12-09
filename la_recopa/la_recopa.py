@@ -116,7 +116,7 @@ def footer():
             color="#333",          # ← AHORA SE VE
         ),
         bg="white",
-        height="60px",
+        height="50px",
         width="100%",
         position="fixed",
         bottom="0",
