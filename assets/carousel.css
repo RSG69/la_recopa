@@ -21,19 +21,18 @@
   --bg-end:   #f7bfa8;
 }
 
-/* =======================
-   FONDO — ARREGLADO
-   ======================= */
+/* ============================
+   FONDO DEL GRID
+   ============================ */
 .grid-background {
-  min-height: auto;  /* ← CORREGIDO */
-  padding: 110px 28px 140px 28px;
-  display: block;    /* ← CORREGIDO */
+  padding: 110px 28px 40px 28px;   /* ← padding inferior reducido */
+  display: block;
   background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
 }
 
-/* =======================
+/* ============================
    GRID PRINCIPAL
-   ======================= */
+   ============================ */
 .grid{
   display: grid;
   grid-template-columns: repeat(3, var(--card-w-desktop));
@@ -42,9 +41,9 @@
   justify-content: center;
 }
 
-/* =======================
+/* ============================
    TARJETA
-   ======================= */
+   ============================ */
 .carousel-item{
   width: var(--card-w-desktop);
   height: var(--card-h-desktop);
@@ -57,9 +56,9 @@
   flex-direction: column;
 }
 
-/* =======================
-   TITULO
-   ======================= */
+/* ============================
+   TÍTULO
+   ============================ */
 .carousel-item .heading{
   font-family: "Playfair Display", serif;
   font-size: 26px;
@@ -71,13 +70,13 @@
   width: 100%;
 }
 
-/* =======================
+/* ============================
    IMAGEN
-   ======================= */
+   ============================ */
 .carousel-box{
   width: 100%;
   height: var(--img-h-desktop);
-  background: #000;
+  background: transparent;   /* ← ya no habrá bloque negro */
   border-radius: calc(var(--radius) - 4px);
   overflow: hidden;
   position: relative;
@@ -95,9 +94,9 @@
   left: 0;
 }
 
-/* =======================
+/* ============================
    TEXTO INFERIOR
-   ======================= */
+   ============================ */
 .carousel-item-text{
   margin-top: 4px;
   margin-bottom: 4px;
@@ -108,33 +107,28 @@
   text-shadow: 0 3px 8px rgba(0,0,0,0.45);
 }
 
-/* ================================================================
-   RESPONSIVE — TABLET (incluye respuesta 2 + arreglo footer)
-   ================================================================ */
+/* ============================
+   RESPONSIVE — TABLET
+   ============================ */
 @media (max-width: 1100px){
 
   .grid-background{
     padding-top: 60px;
-    padding-bottom: 140px;
-    min-height: auto;  /* ← necesario para que el footer aparezca */
-    display: block;    /* ← evita que tape al footer */
+    padding-bottom: 100px;
   }
 
-  /* 2 columnas compactas */
   .grid{
     grid-template-columns: repeat(2, var(--card-w-tablet));
-    gap: 22px 26px;  /* (vertical, horizontal) */
+    gap: 22px 26px;
   }
 
-  /* Tarjeta más compacta */
   .carousel-item{
     width: var(--card-w-tablet);
-    height: 310px; /* antes 350px */
+    height: 310px;
   }
 
-  /* Imagen más baja */
   .carousel-box{
-    height: 180px; /* antes 200px */
+    height: 180px;
   }
 
   .carousel-item-text{
@@ -142,9 +136,9 @@
   }
 }
 
-/* =======================
+/* ============================
    RESPONSIVE — MOBILE
-   ======================= */
+   ============================ */
 @media (max-width: 720px){
   .grid{
     grid-template-columns: 1fr;
@@ -160,10 +154,12 @@
   }
 }
 
+/* Espacio para el footer fijo */
 .footer-spacer{
-  height: 80px;   /* suficiente para que el footer quede visible */
+  height: 80px;
   width: 100%;
 }
+
 
 
 
