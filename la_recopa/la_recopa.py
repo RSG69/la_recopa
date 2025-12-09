@@ -4,7 +4,7 @@ import reflex as rx
 # ================================================
 #   TEMA GENERAL
 # ================================================
-custom_theme = rx.theme(color_scheme="orange")
+custom_theme = rx.theme(color_scheme="orange")  
 
 # ================================================
 #   LISTAS
@@ -157,11 +157,16 @@ def cuerpo():
                 justify="center",
                 class_name="grid"
             ),
+
+            # ⭐ MUY IMPORTANTE: mover el spacer AQUÍ
+            rx.box(class_name="footer-spacer"),
+
             class_name="grid-background",
         ),
 
         rx.script(src="/JS/animation.js")
     )
+
 
 
 # ================================================
@@ -171,9 +176,11 @@ def galeria():
     return rx.box(
         header(),
         cuerpo(),
-        rx.box(class_name="footer-spacer"),  # ← ÚNICO SPACER
+        # ❌ eliminamos este spacer que crea el bloque negro
+        # rx.box(class_name="footer-spacer"),
         footer(),
     )
+
 
 
 # ================================================
@@ -181,6 +188,7 @@ def galeria():
 # ================================================
 app = rx.App(
     stylesheets=["/carousel.css"],
+    #stylesheets=["/carousel.css?v=2"],
     theme=custom_theme,
 )
 
