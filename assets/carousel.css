@@ -13,22 +13,19 @@
 
   --img-h-desktop: 210px;
   --img-h-tablet: 180px;
-  --img-h-mobile: 50px;
+  --img-h-mobile: 120px;     /* ← reducido para móvil, evita desbordes */
 
   --radius: 22px;
 
   --bg-start: #fddac7;
   --bg-end:   #f7bfa8;
 
-  /* Alturas reales */
-  --footer-h: 60px;
-
-  /* Gap automático bajo header */
+  --footer-h: 60px; 
   --header-gap: 20px;
 }
 
 /* =====================================
-   GRID BACKGROUND (espaciado automático)
+   GRID BACKGROUND
 ===================================== */
 .grid-background {
   padding: calc(var(--header-gap) + 80px) 28px calc(var(--footer-h) + 20px) 28px;
@@ -52,6 +49,7 @@
 ===================================== */
 .carousel-item{
   width: var(--card-w-desktop);
+  height: auto !important;      /* ← ARREGLA CRECIMIENTO */
   padding: 20px;
   border-radius: var(--radius);
   background: rgba(255,255,255,0.06);
@@ -62,7 +60,17 @@
 }
 
 /* =====================================
-   TITULO CARD
+   CONTENEDOR INTERIOR
+===================================== */
+.vstack-wrapper{
+  width: 100%;
+  height: auto;                 /* ← permite crecer sin recortar */
+  display: flex;
+  flex-direction: column;
+}
+
+/* =====================================
+   TÍTULO CARD
 ===================================== */
 .heading{
   font-family: "Playfair Display", serif;
@@ -79,7 +87,7 @@
 .carousel-box{
   width: 100%;
   height: var(--img-h-desktop);
-  background: transparent;       /* ← sin bloque negro */
+  background: transparent;
   border-radius: calc(var(--radius) - 4px);
   overflow: hidden;
   position: relative;
@@ -93,7 +101,7 @@
 }
 
 /* =====================================
-   TEXTO INFERIOR DEL CARD
+   TEXTO INFERIOR CARD
 ===================================== */
 .carousel-item-text{
   margin-top: 6px;
@@ -102,7 +110,7 @@
   font-weight: 800;
   color: #fff;
   text-shadow: 0 3px 8px rgba(0,0,0,0.45);
-  word-break: break-word;
+  word-break: break-word;      /* ← evita desbordes */
   white-space: normal;
 }
 
@@ -137,30 +145,34 @@
   .carousel-item{
     width: var(--card-w-mobile);
     height: auto !important;
+    padding-bottom: 22px;          /* ← más espacio para texto largo */
   }
 
   .carousel-box{
     height: var(--img-h-mobile) !important;
   }
+
+  .carousel-item-text{
+    margin-top: 12px;
+  }
 }
 
 /* =====================================
-   FOOTER TEXT RESPONSIVE
+   FOOTER RESPONSIVE
 ===================================== */
 .footer-text{
   font-size: clamp(12px, 3vw, 16px);
   text-align: center;
-  white-space: normal;
   color: #333;
   line-height: 1.4;
   padding: 0 10px;
 }
 
-/* Espaciador automático */
 .footer-spacer{
   height: var(--footer-h);
   width: 100%;
 }
+
 
 
 

@@ -42,6 +42,7 @@ def crear_celda(titulo, lista, direccion, gradiente):
 
     return rx.box(
         rx.vstack(
+
             rx.heading(
                 titulo,
                 class_name="heading",
@@ -59,6 +60,8 @@ def crear_celda(titulo, lista, direccion, gradiente):
                 textos[0],
                 class_name="carousel-item-text",
             ),
+
+            class_name="vstack-wrapper",
         ),
 
         class_name="carousel-item",
@@ -66,7 +69,7 @@ def crear_celda(titulo, lista, direccion, gradiente):
     )
 
 # ================================================
-#   HEADER (AUTOMÁTICO / STICKY)
+#   HEADER STICKY
 # ================================================
 def header():
     return rx.box(
@@ -76,7 +79,6 @@ def header():
                 font_size="clamp(22px, 4vw, 32px)",
                 font_weight="700",
                 color="white",
-                text_shadow="1px 2px 6px rgba(0,0,0,0.4)",
                 padding_left="20px",
             ),
         ),
@@ -85,7 +87,7 @@ def header():
         display="flex",
         align_items="center",
         bg="linear-gradient(135deg,#8360c3,#2ebf91)",
-        position="sticky",      # ← YA NO TAPA EL CONTENIDO
+        position="sticky",
         top="0",
         z_index="1000",
     )
@@ -99,15 +101,16 @@ def footer():
             "© 2025 La Recopa — Todos los derechos reservados",
             class_name="footer-text",
         ),
+
         bg="white",
         height="60px",
         width="100%",
         position="fixed",
         bottom="0",
-        border_top="1px solid #ccc",
         display="flex",
-        align_items="center",
         justify_content="center",
+        align_items="center",
+        border_top="1px solid #ccc",
         z_index="300",
     )
 
@@ -170,4 +173,5 @@ app.add_page(galeria, title="La Recopa", route="/")
 
 if __name__ == "__main__":
     app.run()
+
 
