@@ -1,47 +1,57 @@
 :root{
   --gap: 36px;
 
+  /* Tamaños controlados */
   --card-w-desktop: 360px;
-  --card-h-desktop: 350px;
+  --card-h-desktop: auto;
 
   --card-w-tablet: 320px;
-  --card-h-tablet: 350px;
+  --card-h-tablet: auto;
 
   --card-w-mobile: 92%;
   --card-h-mobile: auto;
 
   --img-h-desktop: 210px;
-  --img-h-tablet: 200px;
-  --img-h-mobile: 180px;
+  --img-h-tablet: 180px;
+  --img-h-mobile: 140px;
 
   --radius: 22px;
 
   --bg-start: #fddac7;
   --bg-end:   #f7bfa8;
+
+  /* Alturas reales */
+  --footer-h: 60px;
+
+  /* Gap automático bajo header */
+  --header-gap: 20px;
 }
 
-/* ⭐ SECCIÓN DEL GRID — AHORA LLEGA HASTA EL FOOTER */
+/* =====================================
+   GRID BACKGROUND (espaciado automático)
+===================================== */
 .grid-background {
-  padding: 110px 28px 40px 28px;
+  padding: calc(var(--header-gap) + 80px) 28px calc(var(--footer-h) + 20px) 28px;
   display: block;
   background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
-
-  /* importante */
-  min-height: calc(100vh - 130px);
-  box-sizing: border-box;
 }
 
+/* =====================================
+   GRID
+===================================== */
 .grid{
   display: grid;
   grid-template-columns: repeat(3, var(--card-w-desktop));
   gap: var(--gap);
-  align-items: start;
   justify-content: center;
+  align-items: start;
 }
 
+/* =====================================
+   CARD
+===================================== */
 .carousel-item{
   width: var(--card-w-desktop);
-  height: var(--card-h-desktop);
   padding: 20px;
   border-radius: var(--radius);
   background: rgba(255,255,255,0.06);
@@ -51,18 +61,25 @@
   flex-direction: column;
 }
 
-.carousel-item .heading{
-  font-size: 26px;
+/* =====================================
+   TITULO CARD
+===================================== */
+.heading{
+  font-family: "Playfair Display", serif;
+  font-size: clamp(20px, 4vw, 28px);
   font-weight: 700;
-  color: white;
+  color: #ffffff;
   text-shadow: 0 2px 6px rgba(0,0,0,0.4);
   margin-bottom: 12px;
 }
 
+/* =====================================
+   IMAGEN
+===================================== */
 .carousel-box{
   width: 100%;
   height: var(--img-h-desktop);
-  background: transparent;
+  background: transparent;       /* ← sin bloque negro */
   border-radius: calc(var(--radius) - 4px);
   overflow: hidden;
   position: relative;
@@ -70,63 +87,81 @@
 }
 
 .carousel-box img{
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
+/* =====================================
+   TEXTO INFERIOR DEL CARD
+===================================== */
 .carousel-item-text{
-  font-size: 19px;
+  margin-top: 6px;
+  text-align: center;
+  font-size: clamp(16px, 3vw, 20px);
   font-weight: 800;
-  color: white;
+  color: #fff;
   text-shadow: 0 3px 8px rgba(0,0,0,0.45);
+  word-break: break-word;
+  white-space: normal;
 }
 
+/* =====================================
+   RESPONSIVE – TABLET
+===================================== */
 @media (max-width: 1100px){
-  .grid-background{
-    padding-top: 120px;       /* ← FIX */
-    padding-bottom: 100px;
-    min-height: auto;
-    display: block;
-  }
 
   .grid{
     grid-template-columns: repeat(2, var(--card-w-tablet));
-    gap: 22px 26px;
+    gap: 26px;
   }
 
   .carousel-item{
     width: var(--card-w-tablet);
-    height: 310px;
   }
 
   .carousel-box{
-    height: 180px;
+    height: var(--img-h-tablet);
   }
 }
 
+/* =====================================
+   RESPONSIVE – MOBILE
+===================================== */
 @media (max-width: 720px){
+
   .grid{
     grid-template-columns: 1fr;
   }
 
   .carousel-item{
     width: var(--card-w-mobile);
+    height: auto !important;
   }
 
   .carousel-box{
-    height: var(--img-h-mobile);
+    height: var(--img-h-mobile) !important;
   }
 }
 
-.footer-spacer {
-  height: 80px;
+/* =====================================
+   FOOTER TEXT RESPONSIVE
+===================================== */
+.footer-text{
+  font-size: clamp(12px, 3vw, 16px);
+  text-align: center;
+  white-space: normal;
+  color: #333;
+  line-height: 1.4;
+  padding: 0 10px;
 }
 
-/* Fondo blanco del documento */
-html, body {
-  background: white !important;
+/* Espaciador automático */
+.footer-spacer{
+  height: var(--footer-h);
+  width: 100%;
 }
+
 
 
 

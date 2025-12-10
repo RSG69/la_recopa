@@ -4,7 +4,7 @@ import reflex as rx
 # ================================================
 #   TEMA GENERAL
 # ================================================
-custom_theme = rx.theme(color_scheme="orange")  
+custom_theme = rx.theme(color_scheme="orange")
 
 # ================================================
 #   LISTAS
@@ -44,18 +44,11 @@ def crear_celda(titulo, lista, direccion, gradiente):
         rx.vstack(
             rx.heading(
                 titulo,
-                font_family="Playfair Display",
-                font_size="28px",
-                font_weight="700",
-                color="white",
-                text_shadow="1px 2px 6px rgba(0,0,0,0.4)",
                 class_name="heading",
-                width="100%",
-                text_align="left"
             ),
 
             rx.box(
-                rx.image(src=rutas[0], class_name="carousel-img"),
+                rx.image(src=rutas[0]),
                 class_name="carousel-box",
                 data_direction=direccion,
                 data_images=json.dumps(rutas),
@@ -64,32 +57,27 @@ def crear_celda(titulo, lista, direccion, gradiente):
 
             rx.text(
                 textos[0],
-                class_name="carousel-item-text carousel-text",
+                class_name="carousel-item-text",
             ),
-
-            class_name="vstack-wrapper",
-            width="100%",
-            align_items="stretch",
         ),
 
         class_name="carousel-item",
         background=gradiente,
     )
 
-
 # ================================================
-#   HEADER
+#   HEADER (AUTOMÁTICO / STICKY)
 # ================================================
 def header():
     return rx.box(
         rx.hstack(
             rx.heading(
                 "La Recopa",
-                font_size="2xl",
+                font_size="clamp(22px, 4vw, 32px)",
                 font_weight="700",
-                color="#ffffff",
-                padding_left="20px",
+                color="white",
                 text_shadow="1px 2px 6px rgba(0,0,0,0.4)",
+                padding_left="20px",
             ),
         ),
         width="100%",
@@ -97,36 +85,31 @@ def header():
         display="flex",
         align_items="center",
         bg="linear-gradient(135deg,#8360c3,#2ebf91)",
-        position="fixed",
+        position="sticky",      # ← YA NO TAPA EL CONTENIDO
         top="0",
-        left="0",
-        border_bottom="2px solid rgba(255,255,255,0.5)",
-        z_index="100",
+        z_index="1000",
     )
 
-
 # ================================================
-#   FOOTER (CORREGIDO Y VISIBLE)
+#   FOOTER RESPONSIVE
 # ================================================
 def footer():
     return rx.box(
         rx.text(
             "© 2025 La Recopa — Todos los derechos reservados",
-            font_size="md",
-            color="#333",          # ← AHORA SE VE
+            class_name="footer-text",
         ),
         bg="white",
-        height="50px",
+        height="60px",
         width="100%",
         position="fixed",
         bottom="0",
+        border_top="1px solid #ccc",
         display="flex",
         align_items="center",
         justify_content="center",
-        border_top="1px solid #ccc",
         z_index="300",
     )
-
 
 # ================================================
 #   CUERPO
@@ -158,37 +141,28 @@ def cuerpo():
                 class_name="grid"
             ),
 
-            # ⭐ MUY IMPORTANTE: mover el spacer AQUÍ
-            rx.box(class_name="footer-spacer"),
-
             class_name="grid-background",
         ),
 
         rx.script(src="/JS/animation.js")
     )
 
-
-
 # ================================================
-#   PÁGINA FINAL
+#   PÁGINA
 # ================================================
 def galeria():
     return rx.box(
         header(),
         cuerpo(),
-        # ❌ eliminamos este spacer que crea el bloque negro
-        # rx.box(class_name="footer-spacer"),
+        rx.box(class_name="footer-spacer"),
         footer(),
     )
-
-
 
 # ================================================
 #   APP
 # ================================================
 app = rx.App(
     stylesheets=["/carousel.css"],
-    #stylesheets=["/carousel.css?v=2"],
     theme=custom_theme,
 )
 
@@ -196,3 +170,4 @@ app.add_page(galeria, title="La Recopa", route="/")
 
 if __name__ == "__main__":
     app.run()
+
