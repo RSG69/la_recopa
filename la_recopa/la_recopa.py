@@ -42,7 +42,6 @@ def crear_celda(titulo, lista, direccion, gradiente):
 
     return rx.box(
         rx.vstack(
-
             rx.heading(
                 titulo,
                 class_name="heading",
@@ -101,7 +100,6 @@ def footer():
             "© 2025 La Recopa — Todos los derechos reservados",
             class_name="footer-text",
         ),
-
         bg="white",
         height="60px",
         width="100%",
@@ -141,13 +139,12 @@ def cuerpo():
                 columns=rx.breakpoints(sm="1", md="2", lg="3"),
                 spacing="6",
                 justify="center",
-                class_name="grid"
+                class_name="grid",
             ),
-
             class_name="grid-background",
         ),
 
-        rx.script(src="/JS/animation.js")
+        rx.script(src="/JS/animation.js"),
     )
 
 # ================================================
@@ -173,5 +170,6 @@ app.add_page(galeria, title="La Recopa", route="/")
 
 if __name__ == "__main__":
     app.run()
+
 
 
