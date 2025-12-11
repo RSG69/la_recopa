@@ -39,7 +39,7 @@
   padding-top: clamp(40px, 6vw, 70px);     /* Responsive y más pequeño */
   padding-left: 28px;
   padding-right: 28px;
-  padding-bottom: calc(var(--footer-h) + 15px);
+  padding-bottom: calc(var(--footer-h) + 20px);
   background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
 }
 /* =====================================
