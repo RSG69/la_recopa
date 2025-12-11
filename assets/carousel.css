@@ -34,12 +34,14 @@
 /* =====================================
    GRID BACKGROUND
 ===================================== */
+
 .grid-background {
-  padding: calc(var(--header-gap) + 80px) 28px calc(var(--footer-h) + 20px) 28px;
-  display: block;
+  padding-top: clamp(40px, 6vw, 70px);     /* Responsive y más pequeño */
+  padding-left: 28px;
+  padding-right: 28px;
+  padding-bottom: calc(var(--footer-h) + 15px);
   background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
 }
-
 /* =====================================
    GRID
 ===================================== */
@@ -185,6 +187,11 @@
   width: 100%;
 }
 
+@media (max-width: 720px){
+  .grid-background {
+    padding-top: 35px;     /* aún más compacto */
+  }
+}
 
 
 
