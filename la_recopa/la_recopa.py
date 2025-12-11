@@ -71,41 +71,52 @@ def crear_celda(titulo, lista, direccion, gradiente):
 #   HEADER STICKY
 # ================================================
 def header():
-    return rx.vstack(
+    return rx.box(
         rx.hstack(
-            rx.image(src="/escudo.png",width="15",height="165px",border_radius="10px"),
-            rx.box(
-                rx.vstack(#con esto conseguimos que los texto salgan uno debajo uno del otro
-                    rx.heading(
-                        "Bar - Cafeteria",
-                        font_size="clamp(22px, 4vw, 32px)",
-                        font_weight="700",
-                        color="white",
-                        padding_left="00px",
-                    ),
-                    rx.heading(
-                        "La Recopa",
-                        font_size="clamp(22px, 4vw, 32px)",
-                        font_weight="700",
-                        color="white",
-                        padding_left="0px",
-                    ),
-                    align="center",
+            # ESCUDO – centrado y más grande
+            rx.image(
+                src="/escudo.png",
+                width="100px",
+                height="100px",
+                border_radius="8px",
+            ),
+
+            # BLOQUE DE TEXTOS A LA DERECHA DEL ESCUDO
+            rx.vstack(
+                rx.heading(
+                    "Bar - Cafeteria",
+                    font_size="clamp(16px, 3vw, 26px)",
+                    font_weight="700",
+                    color="white",
+                ),
+                rx.heading(
+                    "La Recopa",
+                    font_size="clamp(22px, 4vw, 34px)",
+                    font_weight="700",
+                    color="white",
+                    margin_top="-5px",
                 ),
                 spacing="3",
-                padding_top="50px",
+                align="start",
             ),
-            spacing="0",
+
+            spacing="4",
+            align="center",
+            justify="center",     # ← CENTRA TODO EL BLOQUE
         ),
+
         width="100%",
-        height="160px",
+        height="100x",           # altura más baja pero elegante
+        bg="linear-gradient(135deg,#8360c3,#2ebf91)",
         display="flex",
         align_items="center",
-        bg="linear-gradient(135deg,#8360c3,#2ebf91)",
+        justify_content="center",
         position="sticky",
-        top="0",
+        #top="0",
         z_index="1000",
     )
+
+
 
 # ================================================
 #   FOOTER RESPONSIVE
