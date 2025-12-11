@@ -71,18 +71,34 @@ def crear_celda(titulo, lista, direccion, gradiente):
 #   HEADER STICKY
 # ================================================
 def header():
-    return rx.box(
+    return rx.vstack(
         rx.hstack(
-            rx.heading(
-                "La Recopa",
-                font_size="clamp(22px, 4vw, 32px)",
-                font_weight="700",
-                color="white",
-                padding_left="20px",
+            rx.image(src="/escudo.png",width="15",height="165px",border_radius="10px"),
+            rx.box(
+                rx.vstack(#con esto conseguimos que los texto salgan uno debajo uno del otro
+                    rx.heading(
+                        "Bar - Cafeteria",
+                        font_size="clamp(22px, 4vw, 32px)",
+                        font_weight="700",
+                        color="white",
+                        padding_left="00px",
+                    ),
+                    rx.heading(
+                        "La Recopa",
+                        font_size="clamp(22px, 4vw, 32px)",
+                        font_weight="700",
+                        color="white",
+                        padding_left="0px",
+                    ),
+                    align="center",
+                ),
+                spacing="3",
+                padding_top="50px",
             ),
+            spacing="0",
         ),
         width="100%",
-        height="80px",
+        height="160px",
         display="flex",
         align_items="center",
         bg="linear-gradient(135deg,#8360c3,#2ebf91)",
