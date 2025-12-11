@@ -123,21 +123,64 @@ def header():
 # ================================================
 def footer():
     return rx.box(
-        rx.text(
-            "© 2025 La Recopa — C/ Mosen Andres Vicente , nº 27 - Zaragoza - Telefono: 976 31 57 15 ",
-            class_name="footer-text",
+        rx.hstack(
+            # HUECO IZQUIERDO (misma anchura que el bloque derecho)
+            rx.box(width="120px"),
+
+            # TEXTO PRINCIPAL CENTRADO
+            rx.text(
+                "Direccion: C/ Mosen Andres Vicente , nº 27 - Zaragoza - Telefono: 976 31 57 15 ",
+                class_name="footer-text",
+                text_align="center",
+                width="100%",
+            ),
+
+            # BLOQUE DERECHA: © + Robert69 (misma línea) + imagen
+            rx.hstack(
+                # SUB-BLOQUE: símbolo © y nombre en la misma línea
+                rx.hstack(
+                    rx.text("©", font_size="12px", color="#555"),
+                    rx.text("Robert69", font_size="12px", color="#555", margin_left="6px"),
+                    spacing="1",
+                    align="center",
+                ),
+
+                # Imagen a la derecha del nombre
+                rx.image(
+                    src="/rsg69.png",
+                    width="28px",
+                    height="28px",
+                    border_radius="6px",
+                    margin_left="8px",
+                ),
+
+                spacing="0",
+                align="center",
+                justify="end",
+                width="120px",     # MISMA ANCHURA QUE EL HUECO IZQUIERDO
+            ),
+
+            align="center",
+            justify="between",
+            width="100%",
+            padding_x="12px",
         ),
+
         bg="white",
         height="60px",
         width="100%",
         position="fixed",
         bottom="0",
-        display="flex",
-        justify_content="center",
-        align_items="center",
         border_top="1px solid #ccc",
+        display="flex",
+        align_items="center",
         z_index="300",
     )
+
+
+
+
+
 
 # ================================================
 #   CUERPO
