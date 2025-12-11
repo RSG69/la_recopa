@@ -124,7 +124,7 @@ def header():
 def footer():
     return rx.box(
         rx.text(
-            "© 2025 La Recopa — Todos los derechos reservados",
+            "© 2025 La Recopa — C/ Mosen Andres Vicente , nº 27 - Zaragoza - Telefono: 976 31 57 15 ",
             class_name="footer-text",
         ),
         bg="white",
