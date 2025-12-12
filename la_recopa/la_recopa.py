@@ -137,29 +137,25 @@ def footer():
 
             # BLOQUE DERECHA: © + Robert69 (misma línea) + imagen
             rx.hstack(
-                # SUB-BLOQUE: símbolo © y nombre en la misma línea
-                rx.hstack(
-                    rx.text("©", font_size="12px", color="#555"),
-                    rx.text("Robert69", font_size="12px", color="#555", margin_left="6px"),
-                    spacing="1",
-                    align="center",
+                rx.text(
+                    "© Robert69",
+                    font_size="12px",
+                    color="#555",
+                    margin_right="2px",   # Micro espacio opcional
                 ),
 
-                # Imagen a la derecha del nombre
                 rx.image(
                     src="/rsg69.png",
                     width="28px",
                     height="28px",
                     border_radius="6px",
-                    margin_left="8px",
                 ),
 
-                spacing="0",
+                spacing="0",              # ← SIN ESPACIO ENTRE TEXTO Y LOGO
                 align="center",
                 justify="end",
-                width="120px",     # MISMA ANCHURA QUE EL HUECO IZQUIERDO
+                width="120px",
             ),
-
             align="center",
             justify="between",
             width="100%",
