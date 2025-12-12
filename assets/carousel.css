@@ -1,10 +1,15 @@
 :root{
   --gap: 36px;
 
-  /* Card sizes */
+  /* Tamaños controlados */
   --card-w-desktop: 360px;
+  --card-h-desktop: auto;
+
   --card-w-tablet: 320px;
+  --card-h-tablet: auto;
+
   --card-w-mobile: 92%;
+  --card-h-mobile: auto;
 
   --img-h-desktop: 210px;
   --img-h-tablet: 180px;
@@ -15,78 +20,31 @@
   --bg-start: #fddac7;
   --bg-end:   #f7bfa8;
 
-  --header-h: 120px;  /* altura del header fijo */
-  --footer-h: 60px;   /* altura del footer fijo */
+  --footer-h: 60px; 
+  --header-gap: 20px;
 }
 
-/* Reset */
+/* Para que todos los tamaños se calculen bien */
 *,
 *::before,
-*::after { box-sizing: border-box; }
-
-html, body, #root { height: 100%; margin: 0; padding: 0; }
-
-/* ======================
-   HEADER (FIJO)
-   ====================== */
-.app-header{
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--header-h);
-  background: linear-gradient(135deg,#8360c3,#2ebf91);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+*::after{
+  box-sizing: border-box;
 }
 
-/* ======================
-   FOOTER (FIJO)
-   ====================== */
-.app-footer{
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: var(--footer-h);
-  background: #fff;
-  border-top: 1px solid #e6e6e6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 900;
-}
-
-/* ======================
-   ÁREA SCROLEABLE (solo el grid)
-   ====================== */
-.scroll-area{
-  margin-top: var(--header-h);        /* deja sitio para header fijo */
-  margin-bottom: var(--footer-h);     /* deja sitio para footer fijo */
-  height: calc(100vh - var(--header-h) - var(--footer-h));
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;  /* inercia en iOS */
-  background: transparent;
-}
-
-/* ======================
+/* =====================================
    GRID BACKGROUND
-   ====================== */
-.grid-background{
-  padding-top: clamp(20px, 4vw, 40px);
+===================================== */
+
+.grid-background {
+  padding-top: clamp(40px, 6vw, 70px);     /* Responsive y más pequeño */
   padding-left: 28px;
   padding-right: 28px;
-  padding-bottom: 28px;
+  padding-bottom: calc(var(--footer-h) + 20px);
   background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
 }
-
-/* ======================
+/* =====================================
    GRID
-   ====================== */
+===================================== */
 .grid{
   display: grid;
   grid-template-columns: repeat(3, var(--card-w-desktop));
@@ -95,47 +53,54 @@ html, body, #root { height: 100%; margin: 0; padding: 0; }
   align-items: start;
 }
 
-/* ======================
+/* =====================================
    CARD
-   ====================== */
+===================================== */
 .carousel-item{
   width: var(--card-w-desktop);
+  height: auto;               /* crece según contenido */
   padding: 20px;
   border-radius: var(--radius);
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.35);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.20);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: hidden;           /* NADA se ve fuera del box */
 }
 
+/* =====================================
+   CONTENEDOR INTERIOR
+===================================== */
 .vstack-wrapper{
   width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
 }
 
-/* ======================
-   TITLE
-   ====================== */
+/* =====================================
+   TÍTULO CARD
+===================================== */
 .heading{
   font-family: "Playfair Display", serif;
   font-size: clamp(20px, 4vw, 28px);
   font-weight: 700;
-  color: #fff;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.35);
+  color: #ffffff;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.4);
   margin-bottom: 12px;
 }
 
-/* ======================
-   IMAGE BOX
-   ====================== */
+/* =====================================
+   IMAGEN
+===================================== */
 .carousel-box{
   width: 100%;
   height: var(--img-h-desktop);
-  border-radius: calc(var(--radius) - 6px);
+  background: transparent;
+  border-radius: calc(var(--radius) - 4px);
   overflow: hidden;
+  position: relative;
   margin-bottom: 10px;
 }
 
@@ -145,41 +110,98 @@ html, body, #root { height: 100%; margin: 0; padding: 0; }
   object-fit: cover;
 }
 
-/* ======================
-   CARD TEXT
-   ====================== */
+/* =====================================
+   TEXTO INFERIOR CARD
+===================================== */
 .carousel-item-text{
   margin-top: 8px;
+  margin-bottom: 0;
   text-align: center;
   font-size: clamp(16px, 3vw, 20px);
   font-weight: 800;
   color: #fff;
   text-shadow: 0 3px 8px rgba(0,0,0,0.45);
+  word-break: break-word;
+  white-space: normal;
   line-height: 1.2;
 }
 
-/* ======================
-   RESPONSIVE
-   ====================== */
+/* =====================================
+   RESPONSIVE – TABLET
+===================================== */
 @media (max-width: 1100px){
-  .grid{ grid-template-columns: repeat(2, var(--card-w-tablet)); gap: 26px; }
-  .carousel-item{ width: var(--card-w-tablet); }
-  .carousel-box{ height: var(--img-h-tablet); }
+
+  .grid{
+    grid-template-columns: repeat(2, var(--card-w-tablet));
+    gap: 26px;
+  }
+
+  .carousel-item{
+    width: var(--card-w-tablet);
+  }
+
+  .carousel-box{
+    height: var(--img-h-tablet);
+  }
+}
+
+/* =====================================
+   RESPONSIVE – MOBILE
+===================================== */
+@media (max-width: 720px){
+
+  .grid{
+    grid-template-columns: 1fr;
+  }
+
+  .carousel-item{
+    width: var(--card-w-mobile);
+    height: auto;
+    padding: 18px;
+    padding-bottom: 24px;      /* sitio extra para texto largo */
+  }
+
+  .carousel-box{
+    height: var(--img-h-mobile);
+  }
+
+  .carousel-item-text{
+    font-size: clamp(14px, 4vw, 18px);
+    margin-top: 10px;
+  }
+}
+
+/* =====================================
+   FOOTER RESPONSIVE
+===================================== */
+.footer-text{
+  font-size: clamp(12px, 3vw, 16px);
+  text-align: center;
+  color: #333;
+  line-height: 1.4;
+  padding: 0 10px;
+}
+
+.footer-spacer{
+  height: var(--footer-h);
+  width: 100%;
 }
 
 @media (max-width: 720px){
-  .grid{ grid-template-columns: 1fr; }
-  .carousel-item{ width: var(--card-w-mobile); padding-bottom: 20px; }
-  .carousel-box{ height: var(--img-h-mobile); }
-  .heading{ font-size: clamp(18px, 6vw, 24px); }
-  .carousel-item-text{ font-size: clamp(14px, 4vw, 18px); }
+  .grid-background {
+    padding-top: 35px;     /* aún más compacto */
+  }
 }
 
-/* Footer text style */
-.footer-text{
-  font-size: clamp(12px, 3vw, 16px);
-  color: #333;
-  text-align: center;
+/* Footer más alto en móvil */
+@media (max-width: 720px){
+  .footer-spacer {
+    height: 80px !important;   /* antes 60px */
+  }
+
+  footer, .footer {
+    height: 80px !important;   /* aumenta altura real del footer */
+  }
 }
 
 
