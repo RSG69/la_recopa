@@ -199,11 +199,11 @@ html, body {
 /* Footer más alto en móvil */
 @media (max-width: 720px){
   .footer-spacer {
-    height: 80px !important;   /* antes 60px */
+    height: 70px !important;   /* antes 60px */
   }
 
   footer, .footer {
-    height: 80px !important;   /* aumenta altura real del footer */
+    height: 70px !important;   /* aumenta altura real del footer */
   }
 }
 

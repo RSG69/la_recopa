@@ -198,7 +198,7 @@ def cuerpo():
             class_name="grid-background",
         ),
 
-        margin_top="60px",
+        margin_top="90px",
     )
 
 
