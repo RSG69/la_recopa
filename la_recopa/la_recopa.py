@@ -75,8 +75,8 @@ def header():
         rx.hstack(
             rx.image(
                 src="/escudo.png",
-                width="70px",
-                height="70px",
+                width="90px",
+                height="90px",
                 border_radius="8px",
             ),
 
@@ -104,7 +104,7 @@ def header():
         ),
 
         width="100%",
-        height="100px",      # ← CORREGIDO (ANTES: "100x")
+        height="95px",      # ← CORREGIDO (ANTES: "100x")
         bg="linear-gradient(135deg,#8360c3,#2ebf91)",
         display="flex",
         align_items="center",

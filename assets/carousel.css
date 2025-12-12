@@ -1,3 +1,6 @@
+html, body {
+  background: #fddac7 !important;
+}
 :root{
   --gap: 36px;
 
