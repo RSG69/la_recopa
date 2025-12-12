@@ -1,6 +1,7 @@
 :root{
   --gap: 36px;
 
+  /* Tamaños controlados */
   --card-w-desktop: 360px;
   --card-h-desktop: auto;
 
@@ -20,25 +21,30 @@
   --bg-end:   #f7bfa8;
 
   --footer-h: 60px; 
+  --header-gap: 20px;
 }
 
-/* Reset */
+/* Para que todos los tamaños se calculen bien */
 *,
 *::before,
 *::after{
   box-sizing: border-box;
 }
 
-/* FONDO DEL CUERPO */
+/* =====================================
+   GRID BACKGROUND
+===================================== */
+
 .grid-background {
-  padding-top: clamp(40px, 6vw, 70px);
+  padding-top: clamp(40px, 6vw, 70px);     /* Responsive y más pequeño */
   padding-left: 28px;
   padding-right: 28px;
   padding-bottom: calc(var(--footer-h) + 20px);
   background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
 }
-
-/* GRID */
+/* =====================================
+   GRID
+===================================== */
 .grid{
   display: grid;
   grid-template-columns: repeat(3, var(--card-w-desktop));
@@ -47,9 +53,12 @@
   align-items: start;
 }
 
-/* CARD */
+/* =====================================
+   CARD
+===================================== */
 .carousel-item{
   width: var(--card-w-desktop);
+  height: auto;               /* crece según contenido */
   padding: 20px;
   border-radius: var(--radius);
   background: rgba(255,255,255,0.06);
@@ -57,14 +66,22 @@
   box-shadow: 0 10px 22px rgba(0,0,0,0.20);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: hidden;           /* NADA se ve fuera del box */
 }
 
+/* =====================================
+   CONTENEDOR INTERIOR
+===================================== */
 .vstack-wrapper{
+  width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
 }
 
+/* =====================================
+   TÍTULO CARD
+===================================== */
 .heading{
   font-family: "Playfair Display", serif;
   font-size: clamp(20px, 4vw, 28px);
@@ -74,11 +91,16 @@
   margin-bottom: 12px;
 }
 
+/* =====================================
+   IMAGEN
+===================================== */
 .carousel-box{
   width: 100%;
   height: var(--img-h-desktop);
+  background: transparent;
   border-radius: calc(var(--radius) - 4px);
   overflow: hidden;
+  position: relative;
   margin-bottom: 10px;
 }
 
@@ -88,77 +110,124 @@
   object-fit: cover;
 }
 
+/* =====================================
+   TEXTO INFERIOR CARD
+===================================== */
 .carousel-item-text{
   margin-top: 8px;
+  margin-bottom: 0;
   text-align: center;
   font-size: clamp(16px, 3vw, 20px);
   font-weight: 800;
   color: #fff;
   text-shadow: 0 3px 8px rgba(0,0,0,0.45);
+  word-break: break-word;
+  white-space: normal;
   line-height: 1.2;
 }
 
-/* TABLET */
+/* =====================================
+   RESPONSIVE – TABLET
+===================================== */
 @media (max-width: 1100px){
+
   .grid{
     grid-template-columns: repeat(2, var(--card-w-tablet));
     gap: 26px;
   }
+
   .carousel-item{
     width: var(--card-w-tablet);
   }
+
   .carousel-box{
     height: var(--img-h-tablet);
   }
 }
 
-/* MOBILE */
+/* =====================================
+   RESPONSIVE – MOBILE
+===================================== */
 @media (max-width: 720px){
+
   .grid{
     grid-template-columns: 1fr;
   }
+
   .carousel-item{
     width: var(--card-w-mobile);
+    height: auto;
     padding: 18px;
-    padding-bottom: 24px;
+    padding-bottom: 24px;      /* sitio extra para texto largo */
   }
+
   .carousel-box{
     height: var(--img-h-mobile);
   }
+
   .carousel-item-text{
     font-size: clamp(14px, 4vw, 18px);
     margin-top: 10px;
   }
 }
 
-/* FOOTER */
+/* =====================================
+   FOOTER RESPONSIVE
+===================================== */
 .footer-text{
   font-size: clamp(12px, 3vw, 16px);
   text-align: center;
   color: #333;
+  line-height: 1.4;
   padding: 0 10px;
 }
 
 .footer-spacer{
   height: var(--footer-h);
+  width: 100%;
 }
 
-/* MOBILE FOOTER */
+@media (max-width: 720px){
+  .grid-background {
+    padding-top: 35px;     /* aún más compacto */
+  }
+}
+
+/* Footer más alto en móvil */
 @media (max-width: 720px){
   .footer-spacer {
-    height: 80px !important;
+    height: 80px !important;   /* antes 60px */
   }
+
   footer, .footer {
-    height: 80px !important;
+    height: 80px !important;   /* aumenta altura real del footer */
   }
 }
 
-/* OPCIONAL: margen superior */
-.body-margin{
-  margin-top: 140px;
-}
-body {
-  background: #fddac7 !important; 
-  margin: 0;
-  padding: 0;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
