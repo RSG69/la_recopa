@@ -129,7 +129,7 @@ def footer():
 
             # TEXTO PRINCIPAL CENTRADO
             rx.text(
-                "Direccion: C/ Mosen Andres Vicente , nº 27 - Zaragoza - Telefono: 976 31 57 15 ",
+                "Dir.: C/ Mosen Andres Vicente , nº 27 - Zaragoza - Tfno.: 976 31 57 15 ",
                 class_name="footer-text",
                 text_align="center",
                 width="100%",
@@ -138,7 +138,7 @@ def footer():
             # BLOQUE DERECHA: © + Robert69 (misma línea) + imagen
             rx.hstack(
                 rx.text(
-                    "© Robert69",
+                    "©Robert69",
                     font_size="12px",
                     color="#555",
                     margin_right="2px",   # Micro espacio opcional
