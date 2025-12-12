@@ -42,11 +42,7 @@ def crear_celda(titulo, lista, direccion, gradiente):
 
     return rx.box(
         rx.vstack(
-            rx.heading(
-                titulo,
-                class_name="heading",
-            ),
-
+            rx.heading(titulo, class_name="heading"),
             rx.box(
                 rx.image(src=rutas[0]),
                 class_name="carousel-box",
@@ -54,34 +50,25 @@ def crear_celda(titulo, lista, direccion, gradiente):
                 data_images=json.dumps(rutas),
                 data_texts=json.dumps(textos),
             ),
-
-            rx.text(
-                textos[0],
-                class_name="carousel-item-text",
-            ),
-
+            rx.text(textos[0], class_name="carousel-item-text"),
             class_name="vstack-wrapper",
         ),
-
         class_name="carousel-item",
         background=gradiente,
     )
 
 # ================================================
-#   HEADER STICKY
+#   HEADER FIJO
 # ================================================
 def header():
     return rx.box(
         rx.hstack(
-            # ESCUDO – centrado y más grande
             rx.image(
                 src="/escudo.png",
                 width="100px",
                 height="100px",
                 border_radius="8px",
             ),
-
-            # BLOQUE DE TEXTOS A LA DERECHA DEL ESCUDO
             rx.vstack(
                 rx.heading(
                     "Bar - Cafeteria",
@@ -99,59 +86,49 @@ def header():
                 spacing="3",
                 align="start",
             ),
-
             spacing="4",
             align="center",
-            justify="center",     # ← CENTRA TODO EL BLOQUE
+            justify="center",
         ),
 
         width="100%",
-        height="100x",           # altura más baja pero elegante
+        height="95px",  # AHORA SÍ ALTURA REAL
         bg="linear-gradient(135deg,#8360c3,#2ebf91)",
         display="flex",
         align_items="center",
         justify_content="center",
-        position="sticky",
-        #top="0",
+        position="fixed",
+        top="0",
         z_index="1000",
     )
 
-
-
 # ================================================
-#   FOOTER RESPONSIVE
+#   FOOTER
 # ================================================
 def footer():
     return rx.box(
         rx.hstack(
-            # HUECO IZQUIERDO (misma anchura que el bloque derecho)
             rx.box(width="120px"),
-
-            # TEXTO PRINCIPAL CENTRADO
             rx.text(
-                "Dir.: C/ Mosen Andres Vicente , nº 27 - Zaragoza - Tfno.: 976 31 57 15 ",
+                "Dir.: C/ Mosen Andres Vicente , nº 27 - Zaragoza - Tfno.: 976 31 57 15",
                 class_name="footer-text",
-                text_align="center",
                 width="100%",
+                text_align="center",
             ),
-
-            # BLOQUE DERECHA: © + Robert69 (misma línea) + imagen
             rx.hstack(
                 rx.text(
                     "©Robert69",
                     font_size="12px",
                     color="#555",
-                    margin_right="2px",   # Micro espacio opcional
+                    margin_right="2px",
                 ),
-
                 rx.image(
                     src="/rsg69.png",
                     width="28px",
                     height="28px",
                     border_radius="6px",
                 ),
-
-                spacing="0",              # ← SIN ESPACIO ENTRE TEXTO Y LOGO
+                spacing="0",
                 align="center",
                 justify="end",
                 width="120px",
@@ -161,7 +138,6 @@ def footer():
             width="100%",
             padding_x="12px",
         ),
-
         bg="white",
         height="60px",
         width="100%",
@@ -173,16 +149,13 @@ def footer():
         z_index="300",
     )
 
-
-
-
-
-
 # ================================================
-#   CUERPO
+#   CUERPO (con margen superior)
 # ================================================
 def cuerpo():
     return rx.box(
+        rx.script(src="/JS/animation.js"),
+
         rx.box(
             rx.grid(
                 crear_celda("DESAYUNOS", DESAYUNOS, "up",
@@ -201,7 +174,6 @@ def cuerpo():
                             "linear-gradient(135deg,#F7971E,#FFD200)"),
                 crear_celda("PLATOS", PLATOS, "right",
                             "linear-gradient(135deg,#8360c3,#2ebf91)"),
-
                 columns=rx.breakpoints(sm="1", md="2", lg="3"),
                 spacing="6",
                 justify="center",
@@ -210,7 +182,7 @@ def cuerpo():
             class_name="grid-background",
         ),
 
-        rx.script(src="/JS/animation.js"),
+        margin_top="130px",  # SEPARA DEL HEADER SIN CREAR FRANJA NEGRA
     )
 
 # ================================================
@@ -222,6 +194,9 @@ def galeria():
         cuerpo(),
         rx.box(class_name="footer-spacer"),
         footer(),
+
+        # 👇 ESTO ELIMINA PARA SIEMPRE LA FRANJA NEGRA
+        bg="#fddac7"
     )
 
 # ================================================
@@ -236,6 +211,3 @@ app.add_page(galeria, title="La Recopa", route="/")
 
 if __name__ == "__main__":
     app.run()
-
-
-
