@@ -68,66 +68,60 @@ def crear_celda(titulo, lista, direccion, gradiente):
     )
 
 # ================================================
-#   HEADER STICKY
+#   HEADER (CORREGIDO)
 # ================================================
 def header():
     return rx.box(
         rx.hstack(
-            # ESCUDO – centrado y más grande
             rx.image(
                 src="/escudo.png",
-                width="100px",
-                height="100px",
+                width="70px",
+                height="70px",
                 border_radius="8px",
             ),
 
-            # BLOQUE DE TEXTOS A LA DERECHA DEL ESCUDO
             rx.vstack(
                 rx.heading(
                     "Bar - Cafeteria",
-                    font_size="clamp(16px, 3vw, 26px)",
+                    font_size="clamp(14px, 2.5vw, 22px)",
                     font_weight="700",
                     color="white",
                 ),
                 rx.heading(
                     "La Recopa",
-                    font_size="clamp(22px, 4vw, 34px)",
+                    font_size="clamp(18px, 3vw, 28px)",
                     font_weight="700",
                     color="white",
                     margin_top="-5px",
                 ),
-                spacing="3",
+                spacing="2",
                 align="start",
             ),
 
-            spacing="4",
+            spacing="3",
             align="center",
-            justify="center",     # ← CENTRA TODO EL BLOQUE
+            justify="center",
         ),
 
         width="100%",
-        height="100x",           # altura más baja pero elegante
+        height="100px",      # ← CORREGIDO (ANTES: "100x")
         bg="linear-gradient(135deg,#8360c3,#2ebf91)",
         display="flex",
         align_items="center",
         justify_content="center",
         position="fixed",
-        #top="0",
+        top="0",
         z_index="1000",
     )
 
-
-
 # ================================================
-#   FOOTER RESPONSIVE
+#   FOOTER
 # ================================================
 def footer():
     return rx.box(
         rx.hstack(
-            # HUECO IZQUIERDO (misma anchura que el bloque derecho)
             rx.box(width="120px"),
 
-            # TEXTO PRINCIPAL CENTRADO
             rx.text(
                 "Dir.: C/ Mosen Andres Vicente , nº 27 - Zaragoza - Tfno.: 976 31 57 15 ",
                 class_name="footer-text",
@@ -135,13 +129,12 @@ def footer():
                 width="100%",
             ),
 
-            # BLOQUE DERECHA: © + Robert69 (misma línea) + imagen
             rx.hstack(
                 rx.text(
                     "©Robert69",
                     font_size="12px",
                     color="#555",
-                    margin_right="2px",   # Micro espacio opcional
+                    margin_right="2px",
                 ),
 
                 rx.image(
@@ -150,8 +143,7 @@ def footer():
                     height="28px",
                     border_radius="6px",
                 ),
-
-                spacing="0",              # ← SIN ESPACIO ENTRE TEXTO Y LOGO
+                spacing="0",
                 align="center",
                 justify="end",
                 width="120px",
@@ -173,16 +165,13 @@ def footer():
         z_index="300",
     )
 
-
-
-
-
-
 # ================================================
-#   CUERPO
+#   CUERPO (MARGEN AÑADIDO)
 # ================================================
 def cuerpo():
     return rx.box(
+        rx.script(src="/JS/animation.js"),  # ← POSICIONAL PRIMERO
+
         rx.box(
             rx.grid(
                 crear_celda("DESAYUNOS", DESAYUNOS, "up",
@@ -210,8 +199,9 @@ def cuerpo():
             class_name="grid-background",
         ),
 
-        rx.script(src="/JS/animation.js"),
+        margin_top="120px",
     )
+
 
 # ================================================
 #   PÁGINA
@@ -222,6 +212,7 @@ def galeria():
         cuerpo(),
         rx.box(class_name="footer-spacer"),
         footer(),
+        bg="#fddac7"   # ← elimina franja negra
     )
 
 # ================================================
@@ -236,6 +227,3 @@ app.add_page(galeria, title="La Recopa", route="/")
 
 if __name__ == "__main__":
     app.run()
-
-
-
