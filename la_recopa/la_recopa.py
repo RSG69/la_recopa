@@ -137,7 +137,7 @@ def footer():
                     border_radius="6px",
                 ),
                 rx.text(
-                    "© Robert69",
+                    "©Robert69",
                     font_size="12px",
                     color="#555",
                     margin_right="2px",
@@ -198,7 +198,7 @@ def cuerpo():
             class_name="grid-background",
         ),
 
-        margin_top="120px",
+        margin_top="60px",
     )
 
 
