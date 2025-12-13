@@ -95,8 +95,18 @@ def header():
         ),
         width="100%",
         height="95px",
-        #bg="linear-gradient(135deg,#8360c3,#2ebf91)",
-        bg="#6B4A74",
+        bg="""
+            linear-gradient(
+            135deg,
+            rgba(255,255,255,0.06),
+            rgba(255,255,255,0)
+            ),
+            linear-gradient(
+            135deg,
+            #5A0F14,
+            #A4161A
+            )
+            """ ,
         position="fixed",
         top="0",
         z_index="1000",
