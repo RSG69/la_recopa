@@ -207,6 +207,30 @@ html, body {
   }
 }
 
+.logo-bar,
+.logo-recopa {
+  transform: scale(2.1);
+}
+
+.logo-escudo {
+  transform: scale(1.5);
+}
+@media (max-width: 720px) {
+
+  .header-logos {
+    gap: 18px !important;
+  }
+
+  .logo-bar,
+  .logo-recopa {
+    transform: scale(1.25) !important;
+  }
+
+  .logo-escudo {
+    transform: scale(1.0) !important;
+  }
+}
+
 
 
 

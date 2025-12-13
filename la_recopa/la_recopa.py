@@ -76,32 +76,25 @@ def header():
             rx.image(
                 src="/Bar_Cafeteria.png",
                 height="80px",
-                style={
-                    "transform": "scale(2.1)",   # 🚀 MUY GRANDE
-                    "transformOrigin": "center"
-                },
+                class_name="logo-bar",
             ),
             rx.image(
                 src="/escudo.png",
                 height="60px",
-                style={
-                    "transform": "scale(1.5)"
-                },
+                class_name="logo-escudo",
             ),
             rx.image(
                 src="/la_recopa.png",
                 height="80px",
-                style={
-                    "transform": "scale(2.1)",   # 🚀 MUY GRANDE
-                    "transformOrigin": "center"
-                },
+                class_name="logo-recopa",
             ),
-            spacing="9",   # ⬅ MÁS ESPACIO ENTRE IMÁGENES
+            spacing="9",
             align="center",
             justify="center",
+            class_name="header-logos",
         ),
         width="100%",
-        height="95px",   # ❌ NO SE TOCA
+        height="95px",
         bg="linear-gradient(135deg,#8360c3,#2ebf91)",
         position="fixed",
         top="0",
@@ -109,8 +102,9 @@ def header():
         display="flex",
         align_items="center",
         justify_content="center",
-        overflow="visible",   # 🔴 CLAVE
+        overflow="visible",
     )
+
 
 
 
