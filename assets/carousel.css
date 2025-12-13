@@ -6,13 +6,13 @@ html, body {
 
   /* Tamaños controlados */
   --card-w-desktop: 360px;
-  --card-h-desktop: auto;
+  /*--card-h-desktop: auto;*/
 
   --card-w-tablet: 320px;
-  --card-h-tablet: auto;
+  /*--card-h-tablet: auto;*/
 
   --card-w-mobile: 92%;
-  --card-h-mobile: auto;
+  /*--card-h-mobile: auto;*/
 
   --img-h-desktop: 210px;
   --img-h-tablet: 180px;
@@ -25,7 +25,12 @@ html, body {
 
   --footer-h: 60px; 
   --header-gap: 20px;
+
+  --card-h-desktop: 370px;
+  --card-h-tablet: 370px;
+  --card-h-mobile: auto; /* en móvil mejor que crezcan */
 }
+
 
 /* Para que todos los tamaños se calculen bien */
 *,
@@ -61,16 +66,15 @@ html, body {
 ===================================== */
 .carousel-item{
   width: var(--card-w-desktop);
-  height: auto;               /* crece según contenido */
+  height: var(--card-h-desktop);
   padding: 20px;
   border-radius: var(--radius);
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.35);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.20);
   display: flex;
   flex-direction: column;
-  overflow: hidden;           /* NADA se ve fuera del box */
+  justify-content: space-between; /* clave */
+  overflow: hidden;
 }
+
 
 /* =====================================
    CONTENEDOR INTERIOR
@@ -116,18 +120,29 @@ html, body {
 /* =====================================
    TEXTO INFERIOR CARD
 ===================================== */
+
+
 .carousel-item-text{
-  margin-top: 8px;
-  margin-bottom: 0;
+  margin-top: auto;          /* CLAVE */
+  padding: 0 10px;
+
+  display: flex;
+  align-items: center;       /* centra vertical */
+  justify-content: center;   /* centra horizontal */
+
   text-align: center;
   font-size: clamp(16px, 3vw, 20px);
   font-weight: 800;
   color: #fff;
   text-shadow: 0 3px 8px rgba(0,0,0,0.45);
-  word-break: break-word;
-  white-space: normal;
+
+  min-height: 48px;          /* mismo espacio siempre */
   line-height: 1.2;
+  word-break: break-word;
 }
+
+
+
 
 /* =====================================
    RESPONSIVE – TABLET

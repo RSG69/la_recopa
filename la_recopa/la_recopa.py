@@ -10,15 +10,15 @@ custom_theme = rx.theme(color_scheme="orange")
 #   LISTAS
 # ================================================
 DESAYUNOS = [
-    ["Café con leche y croissant", "/Cafe_con_leche_y_cruasan.jpg"],
-    ["Café con leche y tostadas", "/cafe_con_leche_y_tostada_con_mermelada.jpg"],
-    ["Zumo natural y pan con tomate", "/zumo_natural_y_tostada_con_tomate.jpg"],
+    ["Café con leche y croissant", "/desayunos/Cafe_con_leche_y_cruasan.jpg"],
+    ["Café con leche y tostadas", "/desayunos/cafe_con_leche_y_tostada_con_mermelada.jpg"],
+    ["Zumo natural y pan con tomate", "/desayunos/zumo_natural_y_tostada_con_tomate.jpg"],
 ]
 
 ALMUERZOS = [
-    ["Ensalada César", "/ensalada_cesar.jpg"],
-    ["Pasta boloñesa", "/pasta_bolonesa.jpg"],
-    ["Sopa del día", "/sopa_de_fideos.jpg"],
+    ["huevos fritos con patatas y jamon", "/almuerzos/huevos fritos con patatas y jamon.jpg"],
+    ["Callos", "/almuerzos/callos.jpg"],
+    ["Salchichas a la riojana", "/almuerzos/salchichas a la riojana.jpg"],
 ]
 
 TAPAS = [
