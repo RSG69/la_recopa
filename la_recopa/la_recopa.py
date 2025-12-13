@@ -74,45 +74,46 @@ def header():
     return rx.box(
         rx.hstack(
             rx.image(
+                src="/Bar_Cafeteria.png",
+                height="80px",
+                style={
+                    "transform": "scale(2.1)",   # 🚀 MUY GRANDE
+                    "transformOrigin": "center"
+                },
+            ),
+            rx.image(
                 src="/escudo.png",
-                width="90px",
-                height="90px",
-                border_radius="8px",
+                height="60px",
+                style={
+                    "transform": "scale(1.5)"
+                },
             ),
-
-            rx.vstack(
-                rx.heading(
-                    "Bar - Cafeteria",
-                    font_size="clamp(14px, 2.5vw, 22px)",
-                    font_weight="700",
-                    color="white",
-                ),
-                rx.heading(
-                    "La Recopa",
-                    font_size="clamp(18px, 3vw, 28px)",
-                    font_weight="700",
-                    color="white",
-                    margin_top="-5px",
-                ),
-                spacing="2",
-                align="start",
+            rx.image(
+                src="/la_recopa.png",
+                height="80px",
+                style={
+                    "transform": "scale(2.1)",   # 🚀 MUY GRANDE
+                    "transformOrigin": "center"
+                },
             ),
-
-            spacing="3",
+            spacing="9",   # ⬅ MÁS ESPACIO ENTRE IMÁGENES
             align="center",
             justify="center",
         ),
-
         width="100%",
-        height="95px",      # ← CORREGIDO (ANTES: "100x")
+        height="95px",   # ❌ NO SE TOCA
         bg="linear-gradient(135deg,#8360c3,#2ebf91)",
-        display="flex",
-        align_items="center",
-        justify_content="center",
         position="fixed",
         top="0",
         z_index="1000",
+        display="flex",
+        align_items="center",
+        justify_content="center",
+        overflow="visible",   # 🔴 CLAVE
     )
+
+
+
 
 # ================================================
 #   FOOTER
