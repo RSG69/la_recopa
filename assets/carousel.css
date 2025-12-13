@@ -215,10 +215,11 @@ html, body {
 .logo-escudo {
   transform: scale(1.5);
 }
+
 @media (max-width: 720px) {
 
   .header-logos {
-    gap: 18px !important;
+    gap: 20px !important;
   }
 
   .logo-bar,
@@ -227,7 +228,7 @@ html, body {
   }
 
   .logo-escudo {
-    transform: scale(1.0) !important;
+    transform: scale(1.5) !important;
   }
 }
 
